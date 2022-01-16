@@ -82,7 +82,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = (props) => {
           value={generalInfoData.positionType}
           onChange={handleChange}
         >
-          <MenuItem value={''}>Select a Job Type</MenuItem>
+          <MenuItem value={'default'}>Select a Job Type</MenuItem>
           <MenuItem value={'Full Time'}>Full Time</MenuItem>
           <MenuItem value={'Part Time'}>Part Time</MenuItem>
           <MenuItem value={'Contract'}>Contract</MenuItem>
@@ -101,7 +101,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = (props) => {
           value={generalInfoData.primaryTag}
           onChange={handleChange}
         >
-          <MenuItem value={''}>Select a Primary Tag</MenuItem>
+          <MenuItem value={'default'}>Select a Primary Tag</MenuItem>
           <MenuItem value={'Software Development'}>Software Development</MenuItem>
           <MenuItem value={'Customer Support'}>Customer Support</MenuItem>
           <MenuItem value={'Sales'}>Sales</MenuItem>
