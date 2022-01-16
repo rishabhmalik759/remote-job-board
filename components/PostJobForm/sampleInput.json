@@ -1,0 +1,36 @@
+{
+  "generalInfoState": {
+    "companyName": "TELASECURE PTY. LTD.",
+    "position": "Blockchain Developer",
+    "positionType": "Full Time",
+    "primaryTag": "Sales",
+    "jobTags": "Blockchain, Development, Web3",
+    "jobLocation": "Remote",
+    "showCompanyLogo": true,
+    "emailToCandidates": true,
+    "getMatches": false,
+    "highlightPost": true,
+    "stickForDuration": "",
+    "jobPostDuration": "7"
+  },
+  "invoiceDetailsState": {
+    "companyInvoiceEmail": "invoice@telasecure.com",
+    "emailListToSendInvoice": "rishabhmalik759@gmail.com, nilaybaranwal@gmail.com",
+    "invoiceAddress": "Narodni 23",
+    "invoiceNotesPurchaseOrder": "Thanks",
+    "payLater": true
+  },
+  "jobDetailsState": {
+    "companyLogo": "blob:http://localhost:8080/1ebf279d-015d-4bee-b0a2-5038805cdf34",
+    "highlightWithCompanyColor": true,
+    "minAnnualSalary": "120000",
+    "maxAnnualSalary": "140000",
+    "jobDescription": {
+      "text": "## Blockhain developer required for a defi startup,\n Creating solution to create a decentralized world",
+      "html": "<h2>Blockhain developer required for a defi startup,</h2>\n<p>Creating solution to create a decentralized world</p>\n"
+    },
+    "howToApply": { "text": "Apply through email", "html": "<p>Apply through email</p>\n" },
+    "applyURL": "google.com",
+    "applyEmail": "apply@telasecure.com"
+  }
+}

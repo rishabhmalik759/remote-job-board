@@ -1,85 +1,34 @@
-import { SelectChangeEvent } from '@mui/material';
 import * as React from 'react';
+import { Box, Button, SelectChangeEvent } from '@mui/material';
 import { ChangeEvent } from 'react';
-import GeneralInfo from './GeneralInfo';
-import JobDetails, { JobDetailsI } from './JobDetails';
+import GeneralInfo, { IGeneralInfo } from './GeneralInfo';
+import JobDetails, { IJobDetails } from './JobDetails';
+import {
+  initialGeneralInfoState,
+  initialInvoiceDetailsState,
+  initialJobDetailsState,
+  salaryOptions,
+} from './InitialStates';
+import InvoiceDetails, { IInvoiceDetails } from './InvoiceDetails';
 
 export const PostJobForm: React.FC = () => {
-  const [generalInfoData, setGeneralInfoData] = React.useState({
-    companyName: '',
-    position: '',
-    positionType: '',
-    primaryTag: '',
-    jobTags: '',
-    jobLocation: '',
-    showCompanyLogo: false,
-    emailToCandidates: false,
-    getMatches: false,
-    highlightPost: false,
-    stickForDuration: '',
-  });
+  const [generalInfoState, setgeneralInfoState] =
+    React.useState<IGeneralInfo['generalInfoState']>(initialGeneralInfoState);
 
-  const [jobDetailsState, setJobDetailsState] = React.useState<JobDetailsI['jobDetailsState']>({
-    highlightWithCompanyColor: false,
-    minAnnualSalary: '0',
-    maxAnnualSalary: '0',
-    jobDescription: {
-      html: '',
-      text: '',
-    },
-    howToApply: {
-      html: '',
-      text: '',
-    },
-    applyURL: '',
-    applyEmail: '',
-  });
+  const [jobDetailsState, setJobDetailsState] = React.useState<IJobDetails['jobDetailsState']>(initialJobDetailsState);
 
-  const salaryOptions = [
-    '0',
-    '10000',
-    '20000',
-    '30000',
-    '40000',
-    '50000',
-    '60000',
-    '70000',
-    '80000',
-    '90000',
-    '100000',
-    '110000',
-    '120000',
-    '130000',
-    '140000',
-    '150000',
-    '160000',
-    '170000',
-    '180000',
-    '190000',
-    '200000',
-    '210000',
-    '220000',
-    '230000',
-    '240000',
-    '250000',
-    '260000',
-    '270000',
-    '280000',
-    '290000',
-    '300000',
-    '310000',
-    '320000',
-    '330000',
-    '340000',
-    '350000',
-    '360000',
-    '370000',
-    '380000',
-    '390000',
-    '400000',
-  ];
+  const [invoiceDetailsState, setInvoiceDetailsState] =
+    React.useState<IInvoiceDetails['invoiceDetailsState']>(initialInvoiceDetailsState);
 
-  const [companyLogo, setCompanyLogo] = React.useState<string>('');
+  const handleInvoiceDetailsStateChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>,
+  ) => {
+    setInvoiceDetailsState({ ...invoiceDetailsState, [e.target.name]: e.target.value });
+  };
+
+  const handleInvoiceDetailsCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+    setInvoiceDetailsState({ ...invoiceDetailsState, [e.target.name]: e.target.checked });
+  };
 
   const handleSetJobDetailsCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setJobDetailsState({ ...jobDetailsState, [e.target.name]: e.target.checked });
@@ -90,55 +39,84 @@ export const PostJobForm: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>,
   ) => {
     setJobDetailsState({ ...jobDetailsState, [e.target.name]: e.target.value });
-    console.log(jobDetailsState)
+    console.log(jobDetailsState);
   };
 
   const handleFileUpload = (e: any) => {
     const selectedFile = e.target.files[0];
     const selectedFileURL = URL.createObjectURL(selectedFile);
-    setCompanyLogo(selectedFileURL);
+    setJobDetailsState({ ...jobDetailsState, ['companyLogo']: selectedFileURL });
+    console.log(jobDetailsState);
   };
 
   function handleMDEditorJobDescriptionChange(input: any) {
-    setJobDetailsState({ ...jobDetailsState, jobDescription: input});
+    setJobDetailsState({ ...jobDetailsState, jobDescription: input });
     console.log('handleEditorChange', input);
   }
 
   function handleMDEditorHowToApplyChange(input: any) {
-    setJobDetailsState({ ...jobDetailsState, howToApply: input});
+    setJobDetailsState({ ...jobDetailsState, howToApply: input });
     console.log(jobDetailsState);
   }
 
-  const handleGeneralInfoDataChange = (
+  const handlegeneralInfoStateChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>,
   ) => {
-    setGeneralInfoData({ ...generalInfoData, [e.target.name]: e.target.value });
-    console.log(generalInfoData, companyLogo);
+    setgeneralInfoState({ ...generalInfoState, [e.target.name]: e.target.value });
   };
 
-  const handleGeneralInfoDataCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGeneralInfoData({ ...generalInfoData, [e.target.name]: e.target.checked });
-    console.log(generalInfoData);
+  const handlegeneralInfoStateCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setgeneralInfoState({ ...generalInfoState, [e.target.name]: e.target.checked });
+    console.log(generalInfoState);
+  };
+
+  const postJob = () => {
+    const post = {
+      generalInfoState,
+      invoiceDetailsState,
+      jobDetailsState,
+    };
+    console.log(JSON.stringify(post));
   };
 
   return (
     <React.Fragment>
       <GeneralInfo
-        handleChange={handleGeneralInfoDataChange}
-        handleCheckBoxChange={handleGeneralInfoDataCheckBoxChange}
-        generalInfoData={generalInfoData}
+        handleChange={handlegeneralInfoStateChange}
+        handleCheckBoxChange={handlegeneralInfoStateCheckBoxChange}
+        generalInfoState={generalInfoState}
       />
       <JobDetails
         handleCheckBoxChange={handleSetJobDetailsCheckboxChange}
         jobDetailsState={jobDetailsState}
-        companyLogo={companyLogo}
-        setCompanyLogo={setCompanyLogo}
         handleJobDetailsStateChange={handleJobDetailsStateChange}
         salaryOptions={salaryOptions}
         handleFileUpload={handleFileUpload}
         handleMDEditorJobDescriptionChange={handleMDEditorJobDescriptionChange}
         handleMDEditorHowToApplyChange={handleMDEditorHowToApplyChange}
       />
+      <InvoiceDetails
+        handleChange={handleInvoiceDetailsStateChange}
+        handleCheckboxChange={handleInvoiceDetailsCheckboxChange}
+        invoiceDetailsState={invoiceDetailsState}
+      />
+      <Box
+        sx={{
+          width: 600,
+          backgroundColor: 'background.paper',
+          borderColor: 'primary.main',
+          borderRadius: 5,
+          marginTop: 8,
+          marginBottom: 20,
+          p: 2,
+          boxShadow: ' rgba(0, 0, 0, 0.1) 0px 10px 50px',
+          marginLeft: 10,
+        }}
+      >
+        <Button variant="contained" onClick={postJob}>
+          Post Job
+        </Button>
+      </Box>
     </React.Fragment>
   );
 };

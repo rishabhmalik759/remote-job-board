@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {
   Box,
   Checkbox,
@@ -12,15 +13,12 @@ import {
   SelectChangeEvent,
   TextField,
 } from '@mui/material';
-import * as React from 'react';
 import EditableImage from './EditableImage';
 import 'react-markdown-editor-lite/lib/index.css';
 import MDEditor from './MDEditor';
 
-export interface JobDetailsI {
+export interface IJobDetails {
   handleCheckBoxChange: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
-  companyLogo: string;
-  setCompanyLogo: React.Dispatch<React.SetStateAction<string>>;
   handleJobDetailsStateChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>,
   ) => void;
@@ -29,6 +27,7 @@ export interface JobDetailsI {
   handleFileUpload: any;
   salaryOptions: string[];
   jobDetailsState: {
+    companyLogo: string;
     highlightWithCompanyColor: boolean;
     minAnnualSalary: string;
     maxAnnualSalary: string;
@@ -45,9 +44,8 @@ export interface JobDetailsI {
   };
 }
 
-const JobDetails: React.FC<JobDetailsI> = (props) => {
+const JobDetails: React.FC<IJobDetails> = (props) => {
   const {
-    companyLogo,
     jobDetailsState,
     handleCheckBoxChange,
     handleJobDetailsStateChange,
@@ -74,7 +72,7 @@ const JobDetails: React.FC<JobDetailsI> = (props) => {
       <div>
         <FormLabel component="legend">COMPANY LOGO (.JPG OR .PNG, SQUARE OR ROUND)</FormLabel>
         <Box sx={{ m: 2 }}>
-          <EditableImage handleFileUpload={handleFileUpload} src={companyLogo} />
+          <EditableImage handleFileUpload={handleFileUpload} src={jobDetailsState.companyLogo} />
         </Box>
       </div>
       <FormControl sx={{ m: 1 }} component="fieldset" variant="standard">

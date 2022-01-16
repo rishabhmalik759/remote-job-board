@@ -17,8 +17,8 @@ import {
 } from '@mui/material';
 import { ChangeEvent } from 'react';
 
-interface GeneralInfoProps {
-  generalInfoData: {
+export interface IGeneralInfo {
+  generalInfoState: {
     companyName: string;
     position: string;
     positionType: string;
@@ -35,8 +35,8 @@ interface GeneralInfoProps {
   handleCheckBoxChange: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
 }
 
-const GeneralInfo: React.FC<GeneralInfoProps> = (props) => {
-  const { generalInfoData, handleChange, handleCheckBoxChange } = props;
+const GeneralInfo: React.FC<IGeneralInfo> = (props) => {
+  const { generalInfoState, handleChange, handleCheckBoxChange } = props;
 
   return (
     <Box
@@ -57,7 +57,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = (props) => {
           id="companyName"
           name="companyName"
           label="Company Name"
-          value={generalInfoData.companyName}
+          value={generalInfoState.companyName}
           onChange={handleChange}
           helperText="Your company's brand/trade name: without Inc., Ltd., B.V., Pte., etc."
         />
@@ -68,7 +68,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = (props) => {
           name="position"
           label="Position"
           helperText=' Please specify as single job position like "Marketing Manager" or "Node JS Developer", not a sentence like "Looking for PM / Biz Dev / Manager". We know your job is important but please DO NOT WRITE IN FULL CAPS. If posting multiple roles, please create multiple job posts. A job post is limited to a single job. We only allow real jobs, absolutely no MLM-type courses "learn how to work online" please.'
-          value={generalInfoData.position}
+          value={generalInfoState.position}
           onChange={handleChange}
         />
       </FormControl>
@@ -79,7 +79,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = (props) => {
           id="positionType"
           label="Position Type"
           name="positionType"
-          value={generalInfoData.positionType}
+          value={generalInfoState.positionType}
           onChange={handleChange}
         >
           <MenuItem value={'default'}>Select a Job Type</MenuItem>
@@ -98,7 +98,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = (props) => {
           id="primaryTag"
           label="Primary Tag"
           name="primaryTag"
-          value={generalInfoData.primaryTag}
+          value={generalInfoState.primaryTag}
           onChange={handleChange}
         >
           <MenuItem value={'default'}>Select a Primary Tag</MenuItem>
@@ -128,7 +128,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = (props) => {
           name="jobTags"
           label="TAGS SEPARATED BY COMMA"
           helperText={` Short tags are preferred. Use tags like industry and tech stack, and separate multiple tags by comma. The first 3 or 4 tags are shown on the site, the other tags aren't but the job will be shown on each tag specific page (like /remote-react-jobs). We also generate tags automatically after you post/edit to supplement.`}
-          value={generalInfoData.jobTags}
+          value={generalInfoState.jobTags}
           onChange={handleChange}
         />
       </FormControl>
@@ -138,7 +138,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = (props) => {
           name="jobLocation"
           label="JOB IS RESTRICTED TO LOCATION"
           helperText={` If you'd only like to hire people from a specific location or timezone this remote job is restricted to (e.g. Europe, United States or CET Timezone). If not restricted, please leave it as "Worldwide". The less restricted this is, the more applicants you will get. Keeping it "Worldwide" is highly recommended as you'll have access to a worldwide pool of talent. To promote fairness in remote work positions, worldwide jobs are ranked higher.`}
-          value={generalInfoData.jobLocation}
+          value={generalInfoState.jobLocation}
           onChange={handleChange}
         />
       </FormControl>
@@ -148,7 +148,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = (props) => {
           <FormControlLabel
             control={
               <Checkbox
-                checked={generalInfoData.showCompanyLogo}
+                checked={generalInfoState.showCompanyLogo}
                 onChange={handleCheckBoxChange}
                 name="showCompanyLogo"
               />
@@ -158,7 +158,7 @@ const GeneralInfo: React.FC<GeneralInfoProps> = (props) => {
           <FormControlLabel
             control={
               <Checkbox
-                checked={generalInfoData.emailToCandidates}
+                checked={generalInfoState.emailToCandidates}
                 onChange={handleCheckBoxChange}
                 name="emailToCandidates"
               />
@@ -167,13 +167,13 @@ const GeneralInfo: React.FC<GeneralInfoProps> = (props) => {
           />
           <FormControlLabel
             control={
-              <Checkbox checked={generalInfoData.getMatches} onChange={handleCheckBoxChange} name="getMatches" />
+              <Checkbox checked={generalInfoState.getMatches} onChange={handleCheckBoxChange} name="getMatches" />
             }
             label="Get suitable matches from our directroy of 15000 workers"
           />
           <FormControlLabel
             control={
-              <Checkbox checked={generalInfoData.highlightPost} onChange={handleCheckBoxChange} name="highlightPost" />
+              <Checkbox checked={generalInfoState.highlightPost} onChange={handleCheckBoxChange} name="highlightPost" />
             }
             label="Highlight your post in yellow ($49)"
           />
