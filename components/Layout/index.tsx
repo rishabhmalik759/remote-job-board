@@ -1,107 +1,82 @@
-import { Divider, List, ListItem, ListItemIcon, ListItemText, CssBaseline, AppBar, Toolbar, IconButton, Typography, Hidden, Drawer, Button, Theme } from '@mui/material';
-import* as React from 'react';
+import {
+  CssBaseline,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  styled,
+  Box,
+} from '@mui/material';
+import * as React from 'react';
 import { User } from './User';
-import MenuIcon from '@mui/icons-material/Menu';
-import { createStyles, makeStyles, useTheme } from '@mui/styles';
-
+import { Menu } from '@mui/icons-material';
+import { useTheme } from '@mui/styles';
+import CustomDrawer from './CustomDrawer';
+import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
 interface LayoutProps {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  container?: Element;
-}
-const drawerWidth = "250px";
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: 'flex',
-      color: '#fff',
-    },
-    drawer: {
-      [theme.breakpoints.up('sm')]: {
-        width: drawerWidth,
-        flexShrink: 0,
-      },
-    },
-    appBar: {
-      marginLeft: drawerWidth,
-      [theme.breakpoints.up('sm')]: {
-        width: `calc(100% - ${drawerWidth}px)`,
-      },
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-      [theme.breakpoints.up('sm')]: {
-        display: 'none',
-      },
-    },
-    toolbar: theme.mixins.toolbar,
-    drawerPaper: {
-      width: drawerWidth,
-      backgroundColor: theme.palette.background,
-      color: 'white',
-      paddingLeft:'15px'
-    },
-    content: {
-      flexGrow: 1,
-    },
-    menuItem: {
-      color: '#fff',
-    },
-  }),
-);
-export const Layout: React.FC<LayoutProps> = (props) => {
-  const { container } = props;
-  const classes = useStyles();
-  const theme = useTheme();
-  const[openDrawer, setOpenDrawer] = React.useState(false);
 
-  const drawer = (
-    <div>
-    <Button onClick={()=>setOpenDrawer(true)}>Left</Button>
-    <Drawer
-    classes={{
-      paper: classes.drawerPaper,
-    }}
-      variant="temporary"
-      anchor='left'
-      open={openDrawer}
-      onClose={()=>setOpenDrawer(false)}
-    >
-      something
-      something
-    </Drawer>
-    </div>
-  );
+}
+
+const MainComponent = styled('main')({
+  flexGrow: 1,
+  justifyContent: 'center',
+  margin: 'auto',
+  maxWidth: '80vw',
+  marginTop: 40,
+});
+
+export const Layout: React.FC<LayoutProps> = (props) => {
+  const theme = useTheme();
+  const [openDrawer, setOpenDrawer] = React.useState(false);
+
+  const ToolBarStyles = {
+    [theme.breakpoints.up('md')]: {
+      marginLeft: '120px',
+      width: `calc(100% - 120px)`,
+    },
+  };
+
+  const SupportBarStyles = {
+    display: 'flex',
+    backgroundColor: 'white',
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: '120px',
+    },
+  }
 
   return (
     <div>
       <CssBaseline />
       <AppBar position="fixed">
-        <Toolbar>
+        <Toolbar sx={ToolBarStyles}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
-            onClick={()=>setOpenDrawer(!openDrawer)}
-            size="large">
-            <MenuIcon />
+            onClick={() => setOpenDrawer(!openDrawer)}
+            size="large"
+          >
+            <Menu />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Nitro 🚀
+            Awesome Job Board 🚀
           </Typography>
-          <User/>
+          <User />
         </Toolbar>
+        <Box sx={SupportBarStyles}>
+          <IconButton size='large' sx={{mx: 1.4, my:0.5}}><ArrowBackTwoToneIcon /></IconButton>
+        </Box>
       </AppBar>
+      
+      
       <nav aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-            {drawer}
+        <CustomDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer}/>
       </nav>
-      <main className={classes.content}>
-        <div  className={classes.toolbar} />
+      <MainComponent>
+        {/* <div className={classes.toolbar} /> */}
         {props.children}
-      </main>
+      </MainComponent>
     </div>
   );
-}
+};

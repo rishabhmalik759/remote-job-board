@@ -41,15 +41,14 @@ const GeneralInfo: React.FC<IGeneralInfo> = (props) => {
   return (
     <Box
       sx={{
-        width: 600,
         backgroundColor: 'background.paper',
         borderColor: 'primary.main',
         borderRadius: 5,
-        marginTop: 8,
+        // marginTop: 8,
         marginBottom: 20,
         p: 2,
         boxShadow: ' rgba(0, 0, 0, 0.1) 0px 10px 50px',
-        marginLeft: 10,
+        // marginLeft: 10,
       }}
     >
       <FormControl sx={{ width: '100%', m: 1 }}>
