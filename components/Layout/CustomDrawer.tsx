@@ -1,4 +1,20 @@
-import { List, ListItem, ListItemIcon, ListItemText, IconButton, Drawer, Theme, styled, Box, Icon } from '@mui/material';
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  IconButton,
+  Drawer,
+  Theme,
+  styled,
+  Box,
+  Icon,
+  Typography,
+  Button,
+  Stack,
+} from '@mui/material';
+import Chip from '@mui/material/Chip';
+
 import * as React from 'react';
 import { createStyles, makeStyles, useTheme } from '@mui/styles';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -8,15 +24,16 @@ import { ArrowLeft } from '@material-ui/icons';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import router from 'next/dist/client/router';
 const drawerWidth = '250px';
+import Ticker from 'react-ticker'
 
-const FireNav = styled(List)<{ component?: React.ElementType }>(({ theme }) =>({
+const FireNav = styled(List)<{ component?: React.ElementType }>(({ theme }) => ({
   '& .MuiListItemButton-root': {
     paddingLeft: 24,
     paddingRight: 24,
     minHeight: 56,
     [theme.breakpoints.up('sm')]: {
       height: 64,
-    }
+    },
   },
   '& .MuiListItemIcon-root': {
     minWidth: 0,
@@ -62,13 +79,31 @@ interface ICustomDrawer {
 }
 
 const CustomDrawer: React.FC<ICustomDrawer> = (props) => {
+  const filterOptions: string[] = ['Software Engineering', 'Crypto', 'Blockchain', 'Defi', 'DevOps'];
+  const [listItems, setListItems] = React.useState<{ filterOptions: string[]; selectedFilters: string[] }>({
+    filterOptions: filterOptions,
+    selectedFilters: [],
+  });
   const { openDrawer, setOpenDrawer } = props;
   const classes = useStyles();
   const theme = useTheme();
-  const handleClick = (e:any, route: string) => {
-    e.preventDefault()
-    router.push(route)
-  }
+
+  const handleClick = (e: any, route: string) => {
+    e.preventDefault();
+    router.push(route);
+  };
+
+  const handleAddFilterItem = (item: string) => {
+    const newFilterOptions = listItems.filterOptions.filter((option) => option !== item);
+    setListItems({ selectedFilters: [...listItems.selectedFilters, item], filterOptions: newFilterOptions });
+    console.log(listItems);
+  };
+
+  const handleRemoveFilterItem = (item: string) => {
+    const newSelectedFilters = listItems.selectedFilters.filter((option) => option !== item);
+    setListItems({ selectedFilters: newSelectedFilters, filterOptions: [...listItems.filterOptions, item] });
+  };
+
   return (
     <div>
       <Drawer
@@ -83,7 +118,7 @@ const CustomDrawer: React.FC<ICustomDrawer> = (props) => {
         <Paper elevation={0} sx={{ maxWidth: drawerWidth }}>
           <FireNav component="nav" disablePadding>
             <ListItem sx={{ p: 0, backgroundColor: 'white' }}>
-              <ListItemButton component="a" href="/" onClick={(e:any) => handleClick(e, '/')}>
+              <ListItemButton component="a" href="/" onClick={(e: any) => handleClick(e, '/')}>
                 <ListItemIcon sx={{ fontSize: 20 }}>🔥</ListItemIcon>
                 <ListItemText
                   sx={{ my: 0 }}
@@ -100,7 +135,7 @@ const CustomDrawer: React.FC<ICustomDrawer> = (props) => {
                   backgroundColor: theme.palette.secondary.main,
                   height: 56,
                   display: 'flex',
-                  px:1.5,
+                  px: 1.5,
                   [theme.breakpoints.up('sm')]: {
                     height: 64,
                   },
@@ -109,8 +144,8 @@ const CustomDrawer: React.FC<ICustomDrawer> = (props) => {
                 <IconButton
                   size="large"
                   sx={{
-                    m:'auto',
-                    backgroundColor: theme.palette.secondary.dark,
+                    m: 'auto',
+                    backgroundColor: theme.palette.primary.main,
                     '&:hover': { backgroundColor: theme.palette.secondary.light },
                   }}
                   onClick={() => setOpenDrawer(false)}
@@ -125,7 +160,7 @@ const CustomDrawer: React.FC<ICustomDrawer> = (props) => {
                 component="div"
                 disablePadding
                 color="secondary"
-                sx={{ boxShadow: 1, backgroundColor: 'white', mt: 1, mb: 1, borderRadius: 5 }}
+                sx={{ boxShadow: 1, backgroundColor: 'white', mt: 1, mb: 1, borderRadius: 3 }}
               >
                 <ListItemButton sx={{ height: 56 }}>
                   <ListItemText
@@ -136,25 +171,24 @@ const CustomDrawer: React.FC<ICustomDrawer> = (props) => {
                       variant: 'body2',
                     }}
                   />
-                  <Tooltip  title="Post a job">
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent:'center',
-                      fontSize: 25,
-                    }}
-                  >
-                    🏠
-                  </Box>
-                </Tooltip>
+                  <Tooltip title="Post a job">
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        fontSize: 20,
+                      }}
+                    >
+                      🏠
+                    </Box>
+                  </Tooltip>
                 </ListItemButton>
-                
               </ListItem>
               <ListItem
                 component="div"
                 disablePadding
                 color="secondary"
-                sx={{ boxShadow: 1, backgroundColor: 'white', mt: 1, mb: 1, borderRadius: 5 }}
+                sx={{ boxShadow: 1, backgroundColor: 'white', mt: 1, mb: 1, borderRadius: 3 }}
               >
                 <ListItemButton sx={{ height: 56 }}>
                   <ListItemText
@@ -165,26 +199,25 @@ const CustomDrawer: React.FC<ICustomDrawer> = (props) => {
                       variant: 'body2',
                     }}
                   />
-                  <Tooltip  title="Post a job">
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent:'center',
-                      fontSize: 25,
-                    }}
-                  >
-                    🚐
-                  </Box>
-                </Tooltip>
+                  <Tooltip title="Post a job">
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        fontSize: 20,
+                      }}
+                    >
+                      🚐
+                    </Box>
+                  </Tooltip>
                 </ListItemButton>
-                
               </ListItem>
               <ListItem
                 component="div"
                 disablePadding
                 color="secondary"
-                sx={{ boxShadow: 1, backgroundColor: 'white', mt: 1, mb: 1, borderRadius: 5 }}
-                onClick={()=>router.push('/post-job')}
+                sx={{ boxShadow: 1, backgroundColor: 'white', mt: 1, mb: 1, borderRadius: 3 }}
+                onClick={() => router.push('/post-job')}
               >
                 <ListItemButton sx={{ height: 56 }}>
                   <ListItemText
@@ -195,20 +228,53 @@ const CustomDrawer: React.FC<ICustomDrawer> = (props) => {
                       variant: 'body2',
                     }}
                   />
-                  <Tooltip  title="Post a job">
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent:'center',
-                      fontSize: 25,
-                    }}
-                  >
-                    🚀
-                  </Box>
-                </Tooltip>
+                  <Tooltip title="Post a job">
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        fontSize: 20,
+                      }}
+                    >
+                      🚀
+                    </Box>
+                  </Tooltip>
                 </ListItemButton>
-                
               </ListItem>
+            </Box>
+            <Box>
+              <Typography variant="overline" sx={{ m: 1 }}>
+                Choose Filters
+              </Typography>
+              <List>
+                  {listItems.filterOptions.map((item) => (
+                    <ListItem key={item}>
+                      <div id={item} style={{ margin: 0, padding: 0 }} onClick={() => handleAddFilterItem(item)}>
+                        <Chip clickable={true} color="secondary" label={item} />
+                      </div>
+                    </ListItem>
+                  ))}
+              </List>
+            </Box>
+            <Box>
+              <Typography variant="overline" sx={{ m: 1 }}>
+                Selected Filters
+              </Typography>
+
+              <List>
+                {listItems.selectedFilters.map((item) => (
+                  <ListItem key={item}>
+                    <div id={item}>
+                      <Chip
+                        clickable={true}
+                        color="secondary"
+                        label={item}
+                        onDelete={() => handleRemoveFilterItem(item)}
+                      />
+                    </div>
+                  </ListItem>
+                ))}
+              </List>
             </Box>
           </FireNav>
         </Paper>

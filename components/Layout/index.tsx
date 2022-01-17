@@ -6,6 +6,7 @@ import {
   Typography,
   styled,
   Box,
+  Button,
 } from '@mui/material';
 import * as React from 'react';
 import { User } from './User';
@@ -13,16 +14,17 @@ import { Menu } from '@mui/icons-material';
 import { useTheme } from '@mui/styles';
 import CustomDrawer from './CustomDrawer';
 import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
-interface LayoutProps {
+import router from 'next/dist/client/router';
+import { AnimateSharedLayout, motion } from 'framer-motion';
+import PostAddIcon from '@mui/icons-material/PostAdd';
 
-}
+interface LayoutProps {}
 
 const MainComponent = styled('main')({
   flexGrow: 1,
   justifyContent: 'center',
   margin: 'auto',
-  maxWidth: '80vw',
-  marginTop: 40,
+  maxWidth: '90vw',
 });
 
 export const Layout: React.FC<LayoutProps> = (props) => {
@@ -30,6 +32,7 @@ export const Layout: React.FC<LayoutProps> = (props) => {
   const [openDrawer, setOpenDrawer] = React.useState(false);
 
   const ToolBarStyles = {
+    display: 'flex',
     [theme.breakpoints.up('md')]: {
       marginLeft: '120px',
       width: `calc(100% - 120px)`,
@@ -39,10 +42,11 @@ export const Layout: React.FC<LayoutProps> = (props) => {
   const SupportBarStyles = {
     display: 'flex',
     backgroundColor: 'white',
+    justifyContent: 'space-between',
     [theme.breakpoints.up('md')]: {
-      paddingLeft: '120px',
+      paddingLeft: '130px',
     },
-  }
+  };
 
   return (
     <div>
@@ -50,32 +54,48 @@ export const Layout: React.FC<LayoutProps> = (props) => {
       <AppBar position="fixed">
         <Toolbar sx={ToolBarStyles}>
           <IconButton
-            color="inherit"
+            color="secondary"
             aria-label="open drawer"
             edge="start"
             onClick={() => setOpenDrawer(!openDrawer)}
             size="large"
+            sx={{ mx: 1 }}
           >
             <Menu />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Awesome Job Board 🚀
+          <Typography sx={{ fontSize: 17 }} noWrap>
+            AJB 🚀
           </Typography>
           <User />
+          <Box sx={{ flexGrow: 0, position: 'absolute', right: 20}}>
+            <Button title="Open settings" color="secondary" variant="contained" endIcon={<PostAddIcon />}>
+              Post Job
+            </Button>
+          </Box>
         </Toolbar>
         <Box sx={SupportBarStyles}>
-          <IconButton size='large' sx={{mx: 1.4, my:0.5}}><ArrowBackTwoToneIcon /></IconButton>
+          <IconButton color="secondary" size="large" onClick={() => router.back()} sx={{ mx: 2.5, my: 0.5 }}>
+            <ArrowBackTwoToneIcon />
+          </IconButton>
         </Box>
       </AppBar>
-      
-      
+      <Box sx={{ height: 140 }} />
       <nav aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <CustomDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer}/>
+        <CustomDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
       </nav>
       <MainComponent>
         {/* <div className={classes.toolbar} /> */}
-        {props.children}
+        <AnimateSharedLayout>
+          <motion.div
+            layout
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ type: 'spring', stiffness: 100, duration: 0.5 }}
+          >
+            {props.children}
+          </motion.div>
+        </AnimateSharedLayout>
       </MainComponent>
     </div>
   );

@@ -1,18 +1,10 @@
-import { createTheme, adaptV4Theme } from '@mui/material/styles';
-import { green, orange, yellow } from '@mui/material/colors';
+import { createTheme } from '@mui/material/styles';
 
 // A theme with custom primary and secondary color.
 // It's optional.
 
 const theme = createTheme({
   drawerWidth: 240,
-  components: {
-    MuiIconButton: {
-      styleOverri4des: {
-        root: { backgroundColor: '#d84315', '&:hover': { backgroundColor: '#f59b23 !important' } },
-      },
-    },
-  },
   palette: {
     background: {
       paper: '#F3F2EF',
@@ -23,8 +15,8 @@ const theme = createTheme({
     },
     secondary: {
       light: '#d84315',
-      main: '#f59b23',
-      dark: '#0277bd',
+      main: '#0277bd',
+      dark: '#f59b23',
     },
     typography: {
       useNextVariants: true,
