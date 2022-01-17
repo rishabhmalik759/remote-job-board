@@ -13,6 +13,7 @@ import { Menu } from '@mui/icons-material';
 import { useTheme } from '@mui/styles';
 import CustomDrawer from './CustomDrawer';
 import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
+import router from 'next/dist/client/router';
 interface LayoutProps {
 
 }
@@ -40,7 +41,7 @@ export const Layout: React.FC<LayoutProps> = (props) => {
     display: 'flex',
     backgroundColor: 'white',
     [theme.breakpoints.up('md')]: {
-      paddingLeft: '120px',
+      paddingLeft: '130px',
     },
   }
 
@@ -50,11 +51,12 @@ export const Layout: React.FC<LayoutProps> = (props) => {
       <AppBar position="fixed">
         <Toolbar sx={ToolBarStyles}>
           <IconButton
-            color="inherit"
+            color="secondary"
             aria-label="open drawer"
             edge="start"
             onClick={() => setOpenDrawer(!openDrawer)}
             size="large"
+            sx={{mx:1}}
           >
             <Menu />
           </IconButton>
@@ -64,11 +66,10 @@ export const Layout: React.FC<LayoutProps> = (props) => {
           <User />
         </Toolbar>
         <Box sx={SupportBarStyles}>
-          <IconButton size='large' sx={{mx: 1.4, my:0.5}}><ArrowBackTwoToneIcon /></IconButton>
+          <IconButton color="secondary" size='large' onClick={()=>router.back()} sx={{mx: 2.5, my:0.5}}><ArrowBackTwoToneIcon /></IconButton>
         </Box>
       </AppBar>
-      
-      
+      <Box sx={{height: 100}} />
       <nav aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <CustomDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer}/>
