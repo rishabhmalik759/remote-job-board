@@ -6,19 +6,25 @@ import { green, orange, yellow } from '@mui/material/colors';
 
 const theme = createTheme({
   drawerWidth: 240,
+  components: {
+    MuiIconButton: {
+      styleOverri4des: {
+        root: { backgroundColor: '#d84315', '&:hover': { backgroundColor: '#f59b23 !important' } },
+      },
+    },
+  },
   palette: {
-    background:{
-      paper: "#fff",
-      default: "#F3F2EF"
+    background: {
+      paper: '#F3F2EF',
+      default: '#F3F2EF',
     },
     primary: {
-      main: "#18213c",
-      text: "#000",
+      main: '#000000',
     },
     secondary: {
-      light: yellow[700],
-      main: yellow[900],
-      dark: orange[900],
+      light: '#d84315',
+      main: '#f59b23',
+      dark: '#0277bd',
     },
     typography: {
       useNextVariants: true,
@@ -36,5 +42,3 @@ const theme = createTheme({
 } as any);
 export type Theme = typeof theme;
 export default theme;
-
-
