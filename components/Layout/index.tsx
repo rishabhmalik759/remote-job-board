@@ -1,13 +1,4 @@
-import {
-  CssBaseline,
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  styled,
-  Box,
-  Button,
-} from '@mui/material';
+import { CssBaseline, AppBar, Toolbar, IconButton, Typography, styled, Box, Button } from '@mui/material';
 import * as React from 'react';
 import { User } from './User';
 import { Menu } from '@mui/icons-material';
@@ -63,11 +54,11 @@ export const Layout: React.FC<LayoutProps> = (props) => {
           >
             <Menu />
           </IconButton>
-          <Typography sx={{ fontSize: 17 }} noWrap>
-            AJB 🚀
+          <Typography sx={{ fontSize: 17, fontWeight: 'medium', letterSpacing: '0.05rem' }} noWrap>
+            REMOTEWRLD 🚀
           </Typography>
           <User />
-          <Box sx={{ flexGrow: 0, position: 'absolute', right: 20}}>
+          <Box sx={{ flexGrow: 0, position: 'absolute', right: 20 }}>
             <Button title="Open settings" color="secondary" variant="contained" endIcon={<PostAddIcon />}>
               Post Job
             </Button>
@@ -79,7 +70,15 @@ export const Layout: React.FC<LayoutProps> = (props) => {
           </IconButton>
         </Box>
       </AppBar>
-      <Box sx={{ height: 140 }} />
+      {/* AppBar Space */}
+      <Box
+        sx={{
+          height: 120,
+          [theme.breakpoints.down('md')]: {
+            height: '112px',
+          },
+        }}
+      />
       <nav aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <CustomDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
