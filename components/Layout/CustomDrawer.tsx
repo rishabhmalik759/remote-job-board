@@ -8,10 +8,7 @@ import {
   Theme,
   styled,
   Box,
-  Icon,
   Typography,
-  Button,
-  Stack,
 } from '@mui/material';
 import Chip from '@mui/material/Chip';
 
@@ -20,11 +17,10 @@ import { createStyles, makeStyles, useTheme } from '@mui/styles';
 import ListItemButton from '@mui/material/ListItemButton';
 import Paper from '@mui/material/Paper';
 import Tooltip from '@mui/material/Tooltip';
-import { ArrowLeft } from '@material-ui/icons';
+import { ArrowLeft } from '@mui/icons-material';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import router from 'next/dist/client/router';
 const drawerWidth = '250px';
-import Ticker from 'react-ticker'
 
 const FireNav = styled(List)<{ component?: React.ElementType }>(({ theme }) => ({
   '& .MuiListItemButton-root': {

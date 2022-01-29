@@ -1,8 +1,10 @@
-// next.config.js
-const withPlugins = require('next-compose-plugins');
-const offline = require('next-offline');
-
+/** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
+};
+
+module.exports = {
+  nextConfig,
   target: process.env.NODE_ENV !== 'production' ? 'server' : 'serverless',
   dontAutoRegisterSw: true,
   generateSw: false,
@@ -11,11 +13,13 @@ const nextConfig = {
     swSrc: './public/sw.js',
     swDest: './public/service-worker.js',
   },
-  // Exposes Server ENV Vars To Client Using Webpack
-  env: {
-    AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
-    AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
+      use: ['@svgr/webpack'],
+    });
+
+    return config;
   },
 };
-
-module.exports = withPlugins([[offline]], nextConfig);

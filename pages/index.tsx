@@ -1,16 +1,17 @@
 import * as React from 'react';
 import Head from 'next/head';
 import { Layout } from 'components/Layout';
-import { Box, Link, Typography } from '@mui/material';
 import router from 'next/dist/client/router';
-import {HomepageHeader} from 'components/HomepageHeader';
+import { HomepageHeader } from 'components/HomepageHeader';
+import HomepageFilter from 'components/HomepageFilter';
+import { Box } from '@mui/material';
+
+export const handleRouteChange = (e: React.MouseEvent<HTMLElement>, route: string) => {
+  e.preventDefault();
+  router.push(route);
+};
 
 const Index: React.FC = () => {
-  const handleRouteChange = (e: React.MouseEvent<HTMLElement>, route: string) => {
-    e.preventDefault();
-    router.push(route);
-  };
-
   return (
     <Layout>
       <div>
@@ -20,11 +21,8 @@ const Index: React.FC = () => {
         </Head>
         <div>
           <HomepageHeader />
-
-          <Link href="/post-job" sx={{ color: 'black' }} onClick={(e) => handleRouteChange(e, '/post-job')}>
-            {' '}
-            <a>Post Job</a>
-          </Link>
+          <HomepageFilter />
+          <Box sx={{height: 500}}></Box>
         </div>
       </div>
     </Layout>
