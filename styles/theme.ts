@@ -7,20 +7,20 @@ const theme = createTheme({
   drawerWidth: 240,
   palette: {
     background: {
-      paper: '#F3F2EF',
-      default: '#F3F2EF',
+      paper: '#FEFFFF',
+      default: '#F2F2F2',
     },
     primary: {
       main: '#000000',
     },
     secondary: {
       light: '#d84315',
-      main: '#0277bd',
-      dark: '#f59b23',
+      main: '#3d5afe',
+      dark: '#ef6c00',
     },
-    typography: {
-      useNextVariants: true,
-    },
+  },
+  typography: {
+    useNextVariants: true,
   },
   breakpoints: {
     values: {

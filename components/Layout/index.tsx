@@ -15,7 +15,6 @@ const MainComponent = styled('main')({
   flexGrow: 1,
   justifyContent: 'center',
   margin: 'auto',
-  maxWidth: '90vw',
 });
 
 export const Layout: React.FC<LayoutProps> = (props) => {
@@ -35,7 +34,7 @@ export const Layout: React.FC<LayoutProps> = (props) => {
     backgroundColor: 'white',
     justifyContent: 'space-between',
     [theme.breakpoints.up('md')]: {
-      paddingLeft: '130px',
+      paddingLeft: '144px',
     },
   };
 
@@ -50,32 +49,32 @@ export const Layout: React.FC<LayoutProps> = (props) => {
             edge="start"
             onClick={() => setOpenDrawer(!openDrawer)}
             size="large"
-            sx={{ mx: 1 }}
+            sx={{ color: 'white' }}
           >
             <Menu />
           </IconButton>
           <Typography sx={{ fontSize: 17, fontWeight: 'medium', letterSpacing: '0.05rem' }} noWrap>
-            REMOTEWRLD 🚀
+            REMOTEWRLD
           </Typography>
           <User />
-          <Box sx={{ flexGrow: 0, position: 'absolute', right: 20 }}>
-            <Button title="Open settings" color="secondary" variant="contained" endIcon={<PostAddIcon />}>
+          <Box sx={{ flexGrow: 0, position: 'absolute', right: 10 }}>
+            <Button title="Open settings" color="secondary" variant="contained" endIcon={<div style={{fontSize: 16}}>🚀</div>}>
               Post Job
             </Button>
           </Box>
         </Toolbar>
-        <Box sx={SupportBarStyles}>
-          <IconButton color="secondary" size="large" onClick={() => router.back()} sx={{ mx: 2.5, my: 0.5 }}>
+        <Toolbar sx={SupportBarStyles}>
+          <IconButton color="secondary" edge="start" onClick={() => router.back()} size="large">
             <ArrowBackTwoToneIcon />
           </IconButton>
-        </Box>
+        </Toolbar>
       </AppBar>
       {/* AppBar Space */}
       <Box
         sx={{
-          height: 120,
-          [theme.breakpoints.down('md')]: {
-            height: '112px',
+          height: 112,
+          [theme.breakpoints.up('md')]: {
+            height: 128,
           },
         }}
       />

@@ -24,19 +24,16 @@ export const HomepageHeader: React.FC = () => {
 
   // Styles Start
   const HeaderFlexStyles = {
-    py: 2,
+    py: 4,
+    mb:4,
     display: 'flex',
     direction: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     width: '100%',
     alignItems: 'center',
   };
 
   const HomepageHeaderBox = styled(Box)({
-    position: 'absolute',
-    left: 0,
-    minWidth: '100%',
-    mb: 5,
     background: `linear-gradient(90deg, rgba(254,202,240,1) 0%, rgba(185,231,236,1) 47%, rgba(161,191,235,1) 100%)`,
   });
 
@@ -49,12 +46,13 @@ export const HomepageHeader: React.FC = () => {
     },
   });
   const SearchResultBoxStyles = {
-    height: 400,
+    borderRadius: 2,
+    maxHeight: 400,
     width: 300,
-    bgcolor: 'background.paper',
-    position: 'absolute',
+    bgcolor: theme.palette.background.paper,
     mt: 1,
     boxShadow: 1,
+    zIndex: 100,
     [theme.breakpoints.up('sm')]: {
       width: 400,
     },
@@ -64,7 +62,7 @@ export const HomepageHeader: React.FC = () => {
     p: '5px 4px',
     display: 'flex',
     alignItems: 'center',
-    width: 300,
+    width: '100%',
     my: 'auto',
     [theme.breakpoints.up('sm')]: {
       width: 400,
@@ -76,13 +74,13 @@ export const HomepageHeader: React.FC = () => {
     <>
       <HomepageHeaderBox>
         <Box sx={HeaderFlexStyles}>
-          <HeaderSVGSBox>
-            <HeaderBGLeft width="80%" height="100%" viewBox="0 0 540 380" />
+          <HeaderSVGSBox sx={{opacity: 0.8}}>
+            <HeaderBGLeft width="70%" height="100%" viewBox="0 -20 540 380" />
           </HeaderSVGSBox>
           {/* Search Bar */}
           <Box sx={{ mx: 3 }}>
             <Box sx={{ textAlign: 'center' }}>
-              <Typography variant="h4">Find a job or change your career to the most paid</Typography>
+              <Typography variant="h5">Find a job or change your career to the most paid</Typography>
               <Typography variant="h2" sx={{ fontWeight: 'bold' }}>
                 Remote Roles
               </Typography>
@@ -94,17 +92,16 @@ export const HomepageHeader: React.FC = () => {
                 </IconButton>
                 <Divider orientation="vertical" variant="middle" flexItem />
                 <InputBase
-                  sx={{ ml: 1, flex: 1 }}
+                  sx={{ mx: 1, flex: 1 }}
                   placeholder="Search remote jobs"
                   inputProps={{ 'aria-label': 'search google maps' }}
                 />
               </SearchBox>
             </Box>
-
             {/* Search Results */}
             {displaySearchResults && (
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Box sx={SearchResultBoxStyles}>
+                <Box sx={SearchResultBoxStyles} position={'absolute'}>
                   <FixedSizeList
                     style={{ maxWidth: '400px !important', margin: 'auto' }}
                     height={400}
@@ -119,12 +116,11 @@ export const HomepageHeader: React.FC = () => {
               </Box>
             )}
           </Box>
-          <HeaderSVGSBox>
-            <HeaderBGRight width="80%" height="100%" viewBox="0 0 540 380" />
+          <HeaderSVGSBox sx={{opacity: 0.8}}>
+            <HeaderBGRight width="70%" height="100%" viewBox="0 -20 540 380" />
           </HeaderSVGSBox>
         </Box>
       </HomepageHeaderBox>
-      <Box sx={{ height: 500 }}></Box>
     </>
   );
 };
