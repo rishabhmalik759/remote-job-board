@@ -8,6 +8,7 @@ import {
   Select,
   SelectChangeEvent,
   Checkbox,
+  useTheme,
 } from '@mui/material';
 
 const ITEM_HEIGHT = 48;
@@ -28,6 +29,7 @@ export interface IFilterOptions {
 }
 
 const FilterItem: React.FC<IFilterOptions> = (props) => {
+  const theme = useTheme();
   const { inputLabel, id, menuItems, withOptions = false } = props;
   const labelId = `${id}-label`;
 
@@ -42,10 +44,17 @@ const FilterItem: React.FC<IFilterOptions> = (props) => {
     else setFilter(typeof value === 'string' ? value.split(',') : value);
   };
 
+  const filterItemStyles = {
+    m: 1, width: 170,
+    [theme.breakpoints.up('lg')]: {
+      width: 250
+    }
+  }
+
   return (
     <>
       <div>
-        <FormControl sx={{ m: 1, width: 300 }}>
+        <FormControl sx={filterItemStyles}>
           <InputLabel id={labelId}>{inputLabel}</InputLabel>
           <Select
             labelId={labelId}

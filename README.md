@@ -1,60 +1,34 @@
-# **Nitro** -  Next.js, Material UI, Auth0 and Typescript 
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-![GitHub stars](https://img.shields.io/github/stars/williamluke4/nitro.svg?style=for-the-badge)
-![GitHub issues](https://img.shields.io/github/issues/williamluke4/nitro.svg?style=for-the-badge)
-[![Beerpay](https://beerpay.io/williamluke4/Nitro/badge.svg?style=beer)](https://beerpay.io/williamluke4/Nitro)
+## Getting Started
 
-![NMST](nitro.gif)
-
-##
-- PR's are very welcome
-
-- Please add `.env` to `.gitignore` before adding any secrets
-
-## Links
-
-- [Auth Setup](#auth)
-- [NPM Setup](#npm)
-- [YARN Setup](#yarn)
-
-## Auth
- - [Auth0 Setup](https://github.com/atto-byte/useAuth)
- - Video On [Secrets and Environment Variables in Next.js and Now](https://www.youtube.com/watch?v=pRbQcy9f5ew)
-
-## NPM
-
-### Install and Run Dev Server
+First, run the development server:
 
 ```bash
-git clone https://github.com/williamluke4/nitro.git
-cd nitro
-
-npm install
 npm run dev
-```
-
-### Production Build and Start
-
-```bash
-  npm run build
-  npm run start
-```
-
-## Yarn
-
-### Install and Run Dev Server
-
-```bash
-git clone https://github.com/williamluke4/nitro.git
-cd nitro
-
-yarn
+# or
 yarn dev
 ```
 
-### Production Build and Start
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```bash
-yarn build
-yarn start
-```
+You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

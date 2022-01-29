@@ -1,8 +1,8 @@
 import * as React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
-import flush from "styled-jsx/server";
+// import {flush} from "styled-jsx/babel";
 import theme from "styles/theme";
-import { ServerStyleSheets } from "@material-ui/core";
+import { ServerStyleSheets } from '@mui/styles';
 
 class MyDocument extends Document {
   render() {
@@ -72,7 +72,6 @@ MyDocument.getInitialProps = async ctx => {
     styles: (
       <React.Fragment>
         {sheets.getStyleElement()}
-        {flush() || null}
       </React.Fragment>
     )
   };

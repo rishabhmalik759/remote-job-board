@@ -1,13 +1,11 @@
 import { CssBaseline, AppBar, Toolbar, IconButton, Typography, styled, Box, Button } from '@mui/material';
 import * as React from 'react';
-import { User } from './User';
 import { Menu } from '@mui/icons-material';
 import { useTheme } from '@mui/styles';
 import CustomDrawer from './CustomDrawer';
 import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
 import router from 'next/dist/client/router';
 import { AnimateSharedLayout, motion } from 'framer-motion';
-import PostAddIcon from '@mui/icons-material/PostAdd';
 
 interface LayoutProps {}
 
@@ -56,7 +54,6 @@ export const Layout: React.FC<LayoutProps> = (props) => {
           <Typography sx={{ fontSize: 17, fontWeight: 'medium', letterSpacing: '0.05rem' }} noWrap>
             REMOTEWRLD
           </Typography>
-          <User />
           <Box sx={{ flexGrow: 0, position: 'absolute', right: 10 }}>
             <Button title="Open settings" color="secondary" variant="contained" endIcon={<div style={{fontSize: 16}}>🚀</div>}>
               Post Job
