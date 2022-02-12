@@ -17,6 +17,7 @@ import HeaderBGLeft from 'images/headerBGLeft.svg';
 import HeaderBGRight from 'images/headerBGRight.svg';
 
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
+import SearchBox from './SearchBox';
 
 export const HomepageHeader: React.FC = () => {
   const theme = useTheme();
@@ -58,16 +59,16 @@ export const HomepageHeader: React.FC = () => {
     },
   };
 
-  const SearchBox = styled(Paper)({
-    p: '5px 4px',
-    display: 'flex',
-    alignItems: 'center',
-    width: '100%',
-    my: 'auto',
-    [theme.breakpoints.up('sm')]: {
-      width: 400,
-    },
-  });
+  // const SearchBox = styled(Paper)({
+  //   p: '5px 4px',
+  //   display: 'flex',
+  //   alignItems: 'center',
+  //   width: '100%',
+  //   my: 'auto',
+  //   [theme.breakpoints.up('sm')]: {
+  //     width: 400,
+  //   },
+  // });
   // Styles End
 
   return (
@@ -86,7 +87,7 @@ export const HomepageHeader: React.FC = () => {
               </Typography>
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <SearchBox>
+              {/* <SearchBox>
                 <IconButton sx={{ p: '10px' }}>
                   <SearchIcon />
                 </IconButton>
@@ -96,7 +97,8 @@ export const HomepageHeader: React.FC = () => {
                   placeholder="Search remote jobs"
                   inputProps={{ 'aria-label': 'search google maps' }}
                 />
-              </SearchBox>
+              </SearchBox> */}
+              <SearchBox />
             </Box>
             {/* Search Results */}
             {displaySearchResults && (
