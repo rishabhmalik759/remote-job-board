@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: drawerWidth,
       backgroundColor: theme.palette.background.paper,
       color: 'white',
+      minHeight: '100vh'
     },
     content: {
       flexGrow: 1,

@@ -10,6 +10,7 @@ import {
   Checkbox,
   useTheme,
 } from '@mui/material';
+import { IFilterOptions } from '../FilterOptions';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -21,12 +22,7 @@ const MenuProps = {
   },
 };
 
-export interface IFilterOptions {
-  inputLabel: string;
-  id: string;
-  menuItems: string[];
-  withOptions: boolean;
-}
+
 
 const FilterItem: React.FC<IFilterOptions> = (props) => {
   const theme = useTheme();
