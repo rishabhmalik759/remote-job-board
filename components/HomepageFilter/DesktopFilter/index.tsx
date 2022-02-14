@@ -7,7 +7,7 @@ import {
 import * as React from 'react';
 import { useTheme } from '@mui/styles';
 import FilterItem from './FilterItem';
-import { filterOptions } from './FilterOptions';
+import { filterOptions } from '../FilterOptions';
 import { handleRouteChange } from 'pages';
 
 const DesktopFilter: React.FC = () => {

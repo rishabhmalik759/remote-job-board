@@ -22,6 +22,7 @@ export default function SearchBox() {
         options={top100Films.map((option) => option.title)}
         renderInput={(params) => (
           <>
+          <input autoComplete="false" name="hidden" type="text" style={{display:"none"}}></input>
             <Paper>
               <TextField
                 {...params}
