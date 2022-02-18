@@ -1,23 +1,28 @@
-import {
-  Box,
-  Button,
-  Typography,
-  Paper,
-} from '@mui/material';
 import * as React from 'react';
+import { Box, Button, Typography, Paper } from '@mui/material';
 import { useTheme } from '@mui/styles';
 import FilterItem from './FilterItem';
-import { filterOptions } from '../FilterOptions';
 import { handleRouteChange } from 'pages';
+import { filterOptionsAtomsA } from '../FilterOptions';
+import { useAtom } from 'jotai';
 
 const DesktopFilter: React.FC = () => {
   const theme = useTheme();
-  const desktopFilterStyles = { display: 'none', [theme.breakpoints.up('md')]: {
-    width: 'calc(100% - 2rem)', mx: 'auto', display: 'block'
-  }, [theme.breakpoints.up('lg')]: {
-    width: 'calc(80%)', mx: 'auto', display: 'block'
-  } };
-  // console.log('these are filter options', filterOptions);
+  const [filterOptions] = useAtom(filterOptionsAtomsA);
+  const desktopFilterStyles = {
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      width: 'calc(100% - 2rem)',
+      mx: 'auto',
+      display: 'block',
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: 'calc(80%)',
+      mx: 'auto',
+      display: 'block',
+    },
+  };
+
   return (
     <>
       {/* Desktop Filter */}
@@ -36,11 +41,11 @@ const DesktopFilter: React.FC = () => {
             Post Job
           </Button>
         </Box>
-        <Paper sx={{ m: 1, p: 1, shadow: 2, display: 'flex'}}>
+        <Paper sx={{ m: 1, p: 1, shadow: 2, display: 'flex' }}>
           <Box sx={{ display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap' }}>
-            {filterOptions.map((options) => (
+            {filterOptions.map((optionsAtom) => (
               <Box sx={{ m: 1 }}>
-                <FilterItem {...options} />
+                <FilterItem {...optionsAtom} />
               </Box>
             ))}
             <Box sx={{ display: 'flex' }}>
