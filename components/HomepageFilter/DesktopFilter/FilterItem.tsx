@@ -11,6 +11,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { IFilterOptions } from '../FilterOptions';
+import { PrimitiveAtom, useAtom } from 'jotai';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -22,31 +23,39 @@ const MenuProps = {
   },
 };
 
-
-
-const FilterItem: React.FC<IFilterOptions> = (props) => {
+const FilterItem: React.FC<PrimitiveAtom<IFilterOptions>> = (props) => {
+  const [filterItem, setFilterItem] = useAtom(props);
   const theme = useTheme();
-  const { inputLabel, id, menuItems, withOptions = false } = props;
+  const { inputLabel, id, menuItems, withOptions = false, appliedFilters = [], appliedFiltersCount = 4 } = filterItem;
   const labelId = `${id}-label`;
 
-  const [filter, setFilter] = React.useState<string[]>([]);
-  const handleMulitpleOptionsChange = (event: SelectChangeEvent<typeof filter>) => {
+  const handleSetAppliedFilters = (event: SelectChangeEvent<string[]>) => {
     const {
       target: { value },
     } = event;
-    const clearFilter = value.includes('clear');
-    if(typeof value === 'string' && value === "") setFilter([]);
-    else if (withOptions && clearFilter) setFilter([]);
-    else setFilter(typeof value === 'string' ? value.split(',') : value);
+
+    var appliedFilters;
+
+    if (typeof value !== 'string' && value.find((val) => val === 'clear')) appliedFilters = [];
+    else if (typeof value !== 'string') appliedFilters = value;
+    else if (typeof value === 'string' && value === 'clear') appliedFilters = [];
+    else if (typeof value === 'string') appliedFilters = [value];
+
+    setFilterItem({
+      ...filterItem,
+      appliedFilters: appliedFilters,
+      appliedFiltersCount: appliedFilters ? appliedFilters.length : 0,
+    });
   };
 
   const filterItemStyles = {
-    m: 1, width: 170,
+    m: 1,
+    width: 170,
     [theme.breakpoints.up('lg')]: {
-      width: 250
-    }
-  }
-
+      width: 250,
+    },
+  };
+  
   return (
     <>
       <div>
@@ -56,22 +65,25 @@ const FilterItem: React.FC<IFilterOptions> = (props) => {
             labelId={labelId}
             id={id}
             multiple={withOptions}
-            value={filter}
-            onChange={handleMulitpleOptionsChange}
-            input={<OutlinedInput label={inputLabel} />}
+            value={appliedFilters}
+            onChange={handleSetAppliedFilters}
+            input={<OutlinedInput label={`${appliedFiltersCount} ${inputLabel}`} />}
             renderValue={(selected) => selected.join(', ')}
             MenuProps={MenuProps}
             color="secondary"
           >
-            
-            {withOptions ? <MenuItem sx={{ fontWeight: 'medium' }} value="clear">
-              <em>Clear Filter</em>
-            </MenuItem> : <MenuItem sx={{ fontWeight: 'medium' }} value="">
-              <em>Clear Filter</em>
-            </MenuItem>}
+            {withOptions ? (
+              <MenuItem sx={{ fontWeight: 'medium' }} value="clear">
+                <em>Clear Filter</em>
+              </MenuItem>
+            ) : (
+              <MenuItem sx={{ fontWeight: 'medium' }} value="clear">
+                <em>Clear Filter</em>
+              </MenuItem>
+            )}
             {menuItems.map((name) => (
               <MenuItem key={name} value={name}>
-                {withOptions && <Checkbox checked={filter.includes(name)} />}
+                {withOptions && <Checkbox checked={appliedFilters.includes(name)} />}
                 <ListItemText primary={name} />
               </MenuItem>
             ))}
