@@ -6,13 +6,27 @@ import { filterOptionsA, IFilterOptions } from '../FilterOptions';
 interface IMobileFilterItemList {
   item: PrimitiveAtom<IFilterOptions>;
   selectedFilter: number;
+  clearAll: boolean;
+  setClearAll: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const MobileFilterItemList: React.FC<IMobileFilterItemList> = (props) => {
-  const { item, selectedFilter } = props;
+  const { item, selectedFilter, clearAll, setClearAll } = props;
   const [filterItem, setFilterItem] = useAtom(item);
   const { menuItems, withOptions = false, appliedFilters = [] } = filterItem;
   const [filterOptions] = useAtom(filterOptionsA);
+
+  React.useEffect(() => {
+    handleClearAll();
+    const optionsIndex = filterOptions.find((options) => options.id == filterItem.id);
+    if (optionsIndex === filterOptions[filterOptions.length - 1]) setClearAll(false);
+  }, [clearAll]);
+  
+  const handleClearAll = () => {
+    if (clearAll) {
+      setFilterItem({ ...filterItem, appliedFilters: [], appliedFiltersCount: 0 });
+    }
+  };
 
   const handleFilterChange = (
     event: React.ChangeEvent<HTMLInputElement> | React.FormEventHandler<HTMLDivElement>,
@@ -47,7 +61,7 @@ const MobileFilterItemList: React.FC<IMobileFilterItemList> = (props) => {
         <>
           <Button
             variant="contained"
-            sx={{width: '100%'}}
+            sx={{ width: '100%' }}
             onClick={() => setFilterItem({ ...filterItem, appliedFilters: [], appliedFiltersCount: 0 })}
           >
             CLEAR FILTER
@@ -76,7 +90,7 @@ const MobileFilterItemList: React.FC<IMobileFilterItemList> = (props) => {
               >
                 {menuItems.map((name) => (
                   <FormControlLabel
-                    sx={{ px: 2 }}
+                    sx={{ px: 2, minHeight: 48, maxHeight: 48 }}
                     key={name}
                     value={name}
                     checked={appliedFilters.includes(name) ? true : false}

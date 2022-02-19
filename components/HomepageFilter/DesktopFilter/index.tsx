@@ -3,12 +3,13 @@ import { Box, Button, Typography, Paper } from '@mui/material';
 import { useTheme } from '@mui/styles';
 import FilterItem from './FilterItem';
 import { handleRouteChange } from 'pages';
-import { filterOptionsAtomsA } from '../FilterOptions';
+import { filterOptionsA, filterOptionsAtomsA } from '../FilterOptions';
 import { useAtom } from 'jotai';
 
 const DesktopFilter: React.FC = () => {
   const theme = useTheme();
-  const [filterOptions] = useAtom(filterOptionsAtomsA);
+  const [filterOptionsAtoms] = useAtom(filterOptionsAtomsA);
+  const [filterOptions, setFilterOptions] = useAtom(filterOptionsA);
   const desktopFilterStyles = {
     display: 'none',
     [theme.breakpoints.up('md')]: {
@@ -22,6 +23,8 @@ const DesktopFilter: React.FC = () => {
       display: 'block',
     },
   };
+
+  const [clearAll, setClearAll] = React.useState<boolean>(false);
 
   return (
     <>
@@ -43,13 +46,13 @@ const DesktopFilter: React.FC = () => {
         </Box>
         <Paper sx={{ m: 1, p: 1, shadow: 2, display: 'flex' }}>
           <Box sx={{ display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap' }}>
-            {filterOptions.map((optionsAtom) => (
+            {filterOptionsAtoms.map((optionsAtom) => (
               <Box sx={{ m: 1 }}>
-                <FilterItem {...optionsAtom} />
+                <FilterItem item={optionsAtom} clearAll={clearAll} setClearAll={setClearAll} />
               </Box>
             ))}
             <Box sx={{ display: 'flex' }}>
-              <Button variant="contained" color="primary" sx={{ m: 'auto' }}>
+              <Button onClick={() => setClearAll(true)} variant="contained" color="primary" sx={{ m: 'auto' }}>
                 Clear all
               </Button>
             </Box>

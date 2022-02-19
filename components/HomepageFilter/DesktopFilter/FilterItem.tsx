@@ -10,7 +10,7 @@ import {
   Checkbox,
   useTheme,
 } from '@mui/material';
-import { IFilterOptions } from '../FilterOptions';
+import { filterOptionsA, IFilterOptions } from '../FilterOptions';
 import { PrimitiveAtom, useAtom } from 'jotai';
 
 const ITEM_HEIGHT = 48;
@@ -23,11 +23,31 @@ const MenuProps = {
   },
 };
 
-const FilterItem: React.FC<PrimitiveAtom<IFilterOptions>> = (props) => {
-  const [filterItem, setFilterItem] = useAtom(props);
+interface IFilterItem {
+  item: PrimitiveAtom<IFilterOptions>;
+  clearAll: boolean;
+  setClearAll: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const FilterItem: React.FC<IFilterItem> = (props) => {
+  const { item, clearAll, setClearAll } = props;
+  const [filterItem, setFilterItem] = useAtom(item);
+  const [filterOptions] = useAtom(filterOptionsA);
   const theme = useTheme();
   const { inputLabel, id, menuItems, withOptions = false, appliedFilters = [], appliedFiltersCount = 4 } = filterItem;
   const labelId = `${id}-label`;
+
+  React.useEffect(() => {
+    handleClearAll();
+    const optionsIndex = filterOptions.find((options)=> options.id == filterItem.id);
+    if(optionsIndex === filterOptions[filterOptions.length - 1]) setClearAll(false);
+  }, [clearAll]);
+
+  const handleClearAll = () => {
+    if (clearAll) {
+      setFilterItem({ ...filterItem, appliedFilters: [], appliedFiltersCount: 0 });
+    }
+  };
 
   const handleSetAppliedFilters = (event: SelectChangeEvent<string[]>) => {
     const {
@@ -48,6 +68,8 @@ const FilterItem: React.FC<PrimitiveAtom<IFilterOptions>> = (props) => {
     });
   };
 
+  React.useEffect(() => {}, [appliedFilters]);
+
   const filterItemStyles = {
     m: 1,
     width: 170,
@@ -55,7 +77,7 @@ const FilterItem: React.FC<PrimitiveAtom<IFilterOptions>> = (props) => {
       width: 250,
     },
   };
-  
+
   return (
     <>
       <div>
@@ -68,7 +90,7 @@ const FilterItem: React.FC<PrimitiveAtom<IFilterOptions>> = (props) => {
             value={appliedFilters}
             onChange={handleSetAppliedFilters}
             input={<OutlinedInput label={`${appliedFiltersCount} ${inputLabel}`} />}
-            renderValue={(selected) =>`[${appliedFiltersCount}] ${selected.join(', ')}`}
+            renderValue={(selected) => `[${appliedFiltersCount}] ${selected.join(', ')}`}
             MenuProps={MenuProps}
             color="secondary"
           >

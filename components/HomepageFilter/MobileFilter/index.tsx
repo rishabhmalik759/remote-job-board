@@ -22,6 +22,7 @@ const drawerBleeding = 56;
 
 const MobileFilter: React.FC = () => {
   const [open, setOpen] = React.useState(false);
+  const [clearAll, setClearAll] = React.useState<boolean>(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -75,10 +76,17 @@ const MobileFilter: React.FC = () => {
           }}
         >
           <Puller />
-          <Typography sx={{ p: 2, color: 'text.secondary' }}>Filter Options</Typography>
+          <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+            <Typography sx={{ p: 2, color: 'text.secondary' }}>Filter Options </Typography>{' '}
+            <Box sx={{ p: 2 }}>
+              <Button  variant="text" color="secondary" onClick={()=>setClearAll(true)}>
+                CLEAR ALL
+              </Button>
+            </Box>
+          </Box>
         </StyledBox>
         <div>
-          <MobileFilterItem />
+          <MobileFilterItem clearAll={clearAll} setClearAll={setClearAll} />
         </div>
       </SwipeableDrawer>
     </>
