@@ -1,17 +1,16 @@
 import * as React from 'react';
-import {
-  Box,
-  Tabs,
-  Tab,
-  useTheme,
-  Paper,
-  List,
-} from '@mui/material';
+import { Box, Tabs, Tab, useTheme, Paper, List } from '@mui/material';
 import MobileFilterItemList from './MobileFilterItemList';
 import { filterOptionsA, filterOptionsAtomsA } from '../FilterOptions';
 import { useAtom } from 'jotai';
 
-const MobileFilterItem: React.FC = () => {
+interface IMobileFilterItem {
+  clearAll: boolean;
+  setClearAll: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const MobileFilterItem: React.FC<IMobileFilterItem> = (props) => {
+  const { clearAll, setClearAll } = props;
   const [selectedFilter, setSelectedFilter] = React.useState(0);
   const theme = useTheme();
   const [filterOptionsAtoms] = useAtom(filterOptionsAtomsA);
@@ -34,7 +33,11 @@ const MobileFilterItem: React.FC = () => {
             aria-label="scrollable auto tabs example"
           >
             {filterOptions.map((item) => (
-              <Tab key={item.inputLabel} sx={{ color: theme.palette.secondary.main }} label={`[${item.appliedFiltersCount}] ${item.inputLabel}`} />
+              <Tab
+                key={item.inputLabel}
+                sx={{ color: theme.palette.secondary.main }}
+                label={`[${item.appliedFiltersCount}] ${item.inputLabel}`}
+              />
             ))}
           </Tabs>
         </Paper>
@@ -53,7 +56,12 @@ const MobileFilterItem: React.FC = () => {
           subheader={<li />}
         >
           {filterOptionsAtoms.map((options) => (
-            <MobileFilterItemList item={options} selectedFilter={selectedFilter} />
+            <MobileFilterItemList
+              item={options}
+              selectedFilter={selectedFilter}
+              clearAll={props.clearAll}
+              setClearAll={props.setClearAll}
+            />
           ))}
         </List>
       </Box>
