@@ -1,18 +1,26 @@
 import * as React from 'react';
-import { Box, Tabs, Tab, Typography, useTheme, Checkbox, ListItemText, MenuItem, Paper, List, ListItem } from '@mui/material';
-import { filterOptions, IFilterOptions } from '../FilterOptions';
+import {
+  Box,
+  Tabs,
+  Tab,
+  useTheme,
+  Paper,
+  List,
+} from '@mui/material';
 import MobileFilterItemList from './MobileFilterItemList';
+import { filterOptionsA, filterOptionsAtomsA } from '../FilterOptions';
+import { useAtom } from 'jotai';
 
-const MobileFilterItem: React.FC<IFilterOptions> = (props) => {
-  const { inputLabel, id, menuItems, withOptions = false } = props;
-
+const MobileFilterItem: React.FC = () => {
   const [selectedFilter, setSelectedFilter] = React.useState(0);
   const theme = useTheme();
-  const [filter, setFilter] = React.useState<string[]>(['Oliver Hansen', 'Van Henry']);
+  const [filterOptionsAtoms] = useAtom(filterOptionsAtomsA);
+  const [filterOptions] = useAtom(filterOptionsA);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event: React.SyntheticEvent<Element, Event>, newValue: any) => {
     setSelectedFilter(newValue);
   };
+
   return (
     <>
       {' '}
@@ -26,41 +34,31 @@ const MobileFilterItem: React.FC<IFilterOptions> = (props) => {
             aria-label="scrollable auto tabs example"
           >
             {filterOptions.map((item) => (
-              <Tab key={item.inputLabel} sx={{ color: theme.palette.secondary.main }} label={item.inputLabel} />
+              <Tab key={item.inputLabel} sx={{ color: theme.palette.secondary.main }} label={`[${item.appliedFiltersCount}] ${item.inputLabel}`} />
             ))}
           </Tabs>
         </Paper>
-        <Box sx={{height: 60, root:{p:0}}} />
-          <List
-            sx={{
-              p: 0,
-              zIndex: 1,
-              width: '100%',
-              bgcolor: 'background.paper',
-              position: 'relative',
-              overflow: 'auto',
-              maxHeight: 160,
-              '& ul': { padding: 0 },
-            }}
-            subheader={<li />}
-          >
-            {filterOptions.map((item) => (
-           <MobileFilterItemList item={item} selectedFilter={selectedFilter} filterOptions={filterOptions} />
+        <Box sx={{ height: 60, root: { p: 0 } }} />
+        <List
+          sx={{
+            p: 0,
+            zIndex: 1,
+            width: '100%',
+            bgcolor: 'background.paper',
+            position: 'relative',
+            overflow: 'auto',
+            maxHeight: 220,
+            '& ul': { padding: 0 },
+          }}
+          subheader={<li />}
+        >
+          {filterOptionsAtoms.map((options) => (
+            <MobileFilterItemList item={options} selectedFilter={selectedFilter} />
           ))}
-          </List>
-          
-        </Box>
+        </List>
+      </Box>
     </>
   );
 };
 
 export default MobileFilterItem;
-
-
-
-function a11yProps(index: number) {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
-  };
-}

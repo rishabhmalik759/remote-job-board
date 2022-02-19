@@ -68,7 +68,7 @@ const FilterItem: React.FC<PrimitiveAtom<IFilterOptions>> = (props) => {
             value={appliedFilters}
             onChange={handleSetAppliedFilters}
             input={<OutlinedInput label={`${appliedFiltersCount} ${inputLabel}`} />}
-            renderValue={(selected) => selected.join(', ')}
+            renderValue={(selected) =>`[${appliedFiltersCount}] ${selected.join(', ')}`}
             MenuProps={MenuProps}
             color="secondary"
           >
