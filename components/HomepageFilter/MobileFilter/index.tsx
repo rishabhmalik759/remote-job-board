@@ -79,7 +79,7 @@ const MobileFilter: React.FC = () => {
           <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
             <Typography sx={{ p: 2, color: 'text.secondary' }}>Filter Options </Typography>{' '}
             <Box sx={{ p: 2 }}>
-              <Button  variant="text" color="secondary" onClick={()=>setClearAll(true)}>
+              <Button sx={{p:0}}  variant="text" color="secondary" onClick={()=>setClearAll(true)}>
                 CLEAR ALL
               </Button>
             </Box>
