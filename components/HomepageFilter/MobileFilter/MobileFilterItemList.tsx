@@ -1,75 +1,99 @@
-import { MenuItem, Checkbox, ListItemText, Box, FormControlLabel, FormControl, RadioGroup, Radio, SelectChangeEvent } from '@mui/material';
+import { MenuItem, Checkbox, Box, FormControlLabel, FormControl, RadioGroup, Radio, Button } from '@mui/material';
+import { PrimitiveAtom, useAtom } from 'jotai';
 import * as React from 'react';
-import { IFilterOptions } from '../FilterOptions';
+import { filterOptionsA, IFilterOptions } from '../FilterOptions';
 
 interface IMobileFilterItemList {
-  item: IFilterOptions;
-  filterOptions: IFilterOptions[];
+  item: PrimitiveAtom<IFilterOptions>;
   selectedFilter: number;
 }
 
 const MobileFilterItemList: React.FC<IMobileFilterItemList> = (props) => {
-  const { item, item: {withOptions, menuItems}, filterOptions, selectedFilter } = props;
-  const [filter, setFilter] = React.useState<string[]>([]);
+  const { item, selectedFilter } = props;
+  const [filterItem, setFilterItem] = useAtom(item);
+  const { menuItems, withOptions = false, appliedFilters = [] } = filterItem;
+  const [filterOptions] = useAtom(filterOptionsA);
 
-  const handleFilterChange = (name: string) => {
-    const removeFilter = filter.includes(name);
-    if (removeFilter) {
-      const newFilter = filter.filter((itemName) => itemName != name);
-      setFilter(newFilter);
+  const handleFilterChange = (
+    event: React.ChangeEvent<HTMLInputElement> | React.FormEventHandler<HTMLDivElement>,
+    name: string,
+  ) => {
+    const removeFilter = appliedFilters.includes(name);
+    console.log('fired');
+    var newFilter;
+    if (name === 'clear') return setFilterItem({ ...filterItem, appliedFilters: [], appliedFiltersCount: 0 });
+    if (withOptions) {
+      if (removeFilter) {
+        newFilter = appliedFilters.filter((itemName) => itemName != name);
+        setFilterItem({ ...filterItem, appliedFilters: newFilter, appliedFiltersCount: newFilter.length });
+      } else {
+        newFilter = [...appliedFilters, name];
+        setFilterItem({
+          ...filterItem,
+          appliedFilters: [...appliedFilters, name],
+          appliedFiltersCount: newFilter.length,
+        });
+      }
     } else {
-      setFilter([...filter, name]);
+      newFilter = [name];
+      setFilterItem({ ...filterItem, appliedFilters: [name], appliedFiltersCount: newFilter.length });
+      console.log(appliedFilters, appliedFilters.includes(name));
     }
-  };
-
-  const handleMulitpleOptionsChange = (event: SelectChangeEvent<typeof filter>) => {
-    const {
-      target: { value },
-    } = event;
-    const clearFilter = value.includes('clear');
-    if(typeof value === 'string' && value === "") setFilter([]);
-    else if (withOptions && clearFilter) setFilter([]);
-    else setFilter(typeof value === 'string' ? value.split(',') : value);
   };
 
   return (
     <>
-      <TabPanel selectedFilter={selectedFilter} index={filterOptions.indexOf(item)}>
-      <>
-      {withOptions ? (
-        menuItems.map((name) => (
-          <MenuItem key={name} value={name} sx={{ px: 2, m: 0, maxHeight: 10 }}>
-            <FormControlLabel
-              control={
-                <Checkbox onChange={() => handleFilterChange(name)} checked={filter.includes(name) ? true : false} />
-              }
-              label={name}
-            />
-          </MenuItem>
-        ))
-      ) : (
-        <FormControl component="fieldset">
-          <RadioGroup
-            aria-label="gender"
-            name="controlled-radio-buttons-group"
-            value={filter}
-            onChange={handleFilterChange}
+      <TabPanel selectedFilter={selectedFilter} index={filterOptions.indexOf(filterItem)}>
+        <>
+          <Button
+            variant="contained"
+            sx={{width: '100%'}}
+            onClick={() => setFilterItem({ ...filterItem, appliedFilters: [], appliedFiltersCount: 0 })}
           >
-            {menuItems.map((name) => (
-              <FormControlLabel value="female" control={<Radio />} label="Female" />
-            ))}
-          </RadioGroup>
-        </FormControl>
-      )}
-    </>
+            CLEAR FILTER
+          </Button>
+          {withOptions ? (
+            menuItems.map((name) => (
+              <MenuItem key={name} value={name} sx={{ px: 2, m: 0, maxHeight: 48 }}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      onChange={(e) => handleFilterChange(e, name)}
+                      checked={appliedFilters.includes(name) ? true : false}
+                    />
+                  }
+                  label={name}
+                />
+              </MenuItem>
+            ))
+          ) : (
+            <FormControl component="fieldset">
+              <RadioGroup
+                aria-label="gender"
+                name="controlled-radio-buttons-group"
+                value={appliedFilters}
+                onChange={handleFilterChange}
+              >
+                {menuItems.map((name) => (
+                  <FormControlLabel
+                    sx={{ px: 2 }}
+                    key={name}
+                    value={name}
+                    checked={appliedFilters.includes(name) ? true : false}
+                    control={<Radio />}
+                    label={name}
+                  />
+                ))}
+              </RadioGroup>
+            </FormControl>
+          )}
+        </>
       </TabPanel>
     </>
   );
 };
 
 export default MobileFilterItemList;
-
-
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -92,85 +116,3 @@ function TabPanel(props: TabPanelProps) {
     </div>
   );
 }
-
-
-
-// return (
-//     <>
-//       <TabPanel selectedFilter={selectedFilter} index={filterOptions.indexOf(item)}>
-//         <MenuItemList
-//           menuItems={item.menuItems}
-//           withOptions={item.withOptions}
-//           handleFilterChange={handleFilterChange}
-//           filter={filter}
-//         />
-//         {item.menuItems.map((name) => (
-//           <MenuItem key={name} value={name} sx={{ px: 2, m: 0, maxHeight: 10 }}>
-//             {item.withOptions ? (
-//               <FormControlLabel
-//                 control={
-//                   <Checkbox onChange={() => handleFilterChange(name)} checked={filter.includes(name) ? true : false} />
-//                 }
-//                 label={name}
-//               />
-//             ) : (
-//               <ListItemText primary={name} />
-//             )}
-//           </MenuItem>
-//         ))}
-//       </TabPanel>
-//     </>
-//   );
-
-
-// function MenuItemList(
-//   menuItems: IFilterOptions['menuItems'],
-//   withOptions: Boolean,
-//   handleFilterChange: (name: string) => void,
-//   filter: string[],
-// ) {
-//   return (
-//     <>
-//       {withOptions ? (
-//         menuItems.map((name) => (
-//           <MenuItem key={name} value={name} sx={{ px: 2, m: 0, maxHeight: 10 }}>
-//             <FormControlLabel
-//               control={
-//                 <Checkbox onChange={() => handleFilterChange(name)} checked={filter.includes(name) ? true : false} />
-//               }
-//               label={name}
-//             />
-//           </MenuItem>
-//         ))
-//       ) : (
-//         <FormControl component="fieldset">
-//           <RadioGroup
-//             aria-label="gender"
-//             name="controlled-radio-buttons-group"
-//             value={filter}
-//             onChange={handleFilterChange}
-//           >
-//             {menuItems.map((name) => (
-//               <FormControlLabel value="female" control={<Radio />} label="Female" />
-//             ))}
-//           </RadioGroup>
-//         </FormControl>
-//       )}
-//     </>
-//   );
-
-  // return <> {menuItems.map((name) => (
-  //     <MenuItem key={name} value={name} sx={{ px: 2, m: 0, maxHeight: 10 }}>
-  //       {withOptions ? (
-  //         <FormControlLabel
-  //           control={
-  //             <Checkbox onChange={() => handleFilterChange(name)} checked={filter.includes(name) ? true : false} />
-  //           }
-  //           label={name}
-  //         />
-  //       ) : (
-  //         <ListItemText primary={name} />
-  //       )}
-  //     </MenuItem>
-  //   ))}</>
-// }

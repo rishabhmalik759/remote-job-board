@@ -31,7 +31,7 @@ const MobileFilter: React.FC = () => {
 
   const swipableDrawerStyles = {
     display: 'none',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       height: `calc(50% - ${drawerBleeding}px)`,
       display: 'block',
     },
@@ -42,7 +42,7 @@ const MobileFilter: React.FC = () => {
       <Global
         styles={{
           '.MuiDrawer-root > .MuiPaper-root': {
-            height: `calc(35% - ${drawerBleeding}px)`,
+            height: `calc(50% - ${drawerBleeding}px)`,
             overflow: 'visible',
           },
         }}

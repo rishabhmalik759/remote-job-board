@@ -7,7 +7,7 @@ export interface IFilterOptions {
   menuItems: string[];
   withOptions: boolean;
   appliedFilters?: string[];
-  appliedFiltersCount?: number;
+  appliedFiltersCount: number;
 }
 
 export interface IAppliedFilters {
@@ -15,12 +15,11 @@ export interface IAppliedFilters {
   appliedFilters: string[];
 }
 
-
-
 export const filterOptions: IFilterOptions[] = [
   {
     inputLabel: 'Date Started',
     id: 'date-started',
+    appliedFiltersCount: 0,
     menuItems: [
       'Oliver Hansen',
       'Van Henry',
@@ -40,6 +39,7 @@ export const filterOptions: IFilterOptions[] = [
   {
     inputLabel: 'Date Posted',
     id: 'date-posted',
+    appliedFiltersCount: 0,
     menuItems: [
       'Tanya Boyd',
       'Huey Raymond',
@@ -59,6 +59,7 @@ export const filterOptions: IFilterOptions[] = [
   {
     inputLabel: 'Date Created',
     id: 'date-created',
+    appliedFiltersCount: 0,
     menuItems: [
       'Oliver Hansen',
       'Ralph Hubbard',
@@ -76,6 +77,7 @@ export const filterOptions: IFilterOptions[] = [
   {
     inputLabel: 'Date Edited',
     id: 'date-edited',
+    appliedFiltersCount: 0,
     menuItems: [
       'Oliver Hansen',
       'Van Henry',
