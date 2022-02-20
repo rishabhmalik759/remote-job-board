@@ -2,6 +2,11 @@
 ### Do not make changes to this file directly
 
 
-type Mutation
+type Company {
+  companyName: String
+  id: ID
+}
 
-type Query
+type Query {
+  companies: [Company]!
+}

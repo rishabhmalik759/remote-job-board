@@ -3,7 +3,6 @@ import Head from 'next/head';
 import { Layout } from 'components/Layout';
 import { Link } from '@mui/material';
 import router from 'next/dist/client/router';
-import { server } from './api';
 
 const Index: React.FC = () => {
   const handleRouteChange = (e: React.MouseEvent<HTMLElement>, route: string) => {
@@ -11,7 +10,6 @@ const Index: React.FC = () => {
     router.push(route);
   };
 
-  server();
 
   return (
     <Layout>

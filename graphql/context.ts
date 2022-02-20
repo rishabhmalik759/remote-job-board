@@ -1,11 +1,11 @@
-// /graphql/context.ts
-import { PrismaClient } from '@prisma/client';
-
-const db = new PrismaClient();
+import { PrismaClient } from '@prisma/client'
+import prisma from '../lib/prisma'
 
 export type Context = {
-  db: PrismaClient;
-};
-export const context: Context = {
-  db,
-};
+  prisma: PrismaClient
+}
+export async function createContext({ req, res }): Promise<Context> {
+  return {
+    prisma,
+  }
+}
