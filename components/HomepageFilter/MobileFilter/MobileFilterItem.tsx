@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box, Tabs, Tab, useTheme, Paper, List } from '@mui/material';
 import MobileFilterItemList from './MobileFilterItemList';
-import { filterOptionsA, filterOptionsAtomsA } from '../FilterOptions';
+import { filterOptionsA, filterOptionsAtomsA } from '../FilterOptionsState';
 import { useAtom } from 'jotai';
 
 interface IMobileFilterItem {
