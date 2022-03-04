@@ -20,6 +20,9 @@ import Tooltip from '@mui/material/Tooltip';
 import { ArrowLeft } from '@mui/icons-material';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import router from 'next/dist/client/router';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
 const drawerWidth = '250px';
 
 const FireNav = styled(List)<{ component?: React.ElementType }>(({ theme }) => ({
@@ -58,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: drawerWidth,
       backgroundColor: theme.palette.background.paper,
       color: 'white',
-      minHeight: '100vh'
+      minHeight: '100vh',
     },
     content: {
       flexGrow: 1,
@@ -100,7 +103,6 @@ const CustomDrawer: React.FC<ICustomDrawer> = (props) => {
     const newSelectedFilters = listItems.selectedFilters.filter((option) => option !== item);
     setListItems({ selectedFilters: newSelectedFilters, filterOptions: [...listItems.filterOptions, item] });
   };
-
   return (
     <div>
       <Drawer
@@ -115,18 +117,26 @@ const CustomDrawer: React.FC<ICustomDrawer> = (props) => {
         <Paper elevation={0} sx={{ maxWidth: drawerWidth }}>
           <FireNav component="nav" disablePadding>
             <ListItem sx={{ p: 0, backgroundColor: 'white' }}>
-              <ListItemButton component="a" href="/" onClick={(e: any) => handleClick(e, '/')}>
-                <ListItemIcon sx={{ fontSize: 20 }}>🔥</ListItemIcon>
-                <ListItemText
-                  sx={{ my: 0 }}
-                  primary="AJB"
-                  primaryTypographyProps={{
-                    fontSize: 20,
-                    fontWeight: 'medium',
-                    letterSpacing: 0,
-                  }}
-                />
-              </ListItemButton>
+              <Link href="/?jid=1123">
+                <ListItemButton component="a">
+                  {' '}
+                  {/*  href="/"  onClick={(e: any) => handleClick(e, '/')} */}
+                  <a>
+                    {' '}
+                    <ListItemIcon sx={{ fontSize: 20 }}>🔥</ListItemIcon>
+                    <ListItemText
+                      sx={{ my: 0 }}
+                      primary="AJB"
+                      primaryTypographyProps={{
+                        fontSize: 20,
+                        fontWeight: 'medium',
+                        letterSpacing: 0,
+                      }}
+                    />
+                  </a>
+                </ListItemButton>
+              </Link>
+
               <Box
                 sx={{
                   backgroundColor: theme.palette.secondary.main,
@@ -209,48 +219,52 @@ const CustomDrawer: React.FC<ICustomDrawer> = (props) => {
                   </Tooltip>
                 </ListItemButton>
               </ListItem>
-              <ListItem
-                component="div"
-                disablePadding
-                color="secondary"
-                sx={{ boxShadow: 1, backgroundColor: 'white', mt: 1, mb: 1, borderRadius: 3 }}
-                onClick={() => router.push('/post-job')}
-              >
-                <ListItemButton sx={{ height: 56 }}>
-                  <ListItemText
-                    primary="Post Job"
-                    primaryTypographyProps={{
-                      color: 'primary',
-                      fontWeight: 'medium',
-                      variant: 'body2',
-                    }}
-                  />
-                  <Tooltip title="Post a job">
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        fontSize: 20,
-                      }}
-                    >
-                      🚀
-                    </Box>
-                  </Tooltip>
-                </ListItemButton>
-              </ListItem>
+              <Link href="/post-job">
+                <a>
+                  <ListItem
+                    component="div"
+                    disablePadding
+                    color="secondary"
+                    sx={{ boxShadow: 1, backgroundColor: 'white', mt: 1, mb: 1, borderRadius: 3 }}
+                    // onClick={() => router.push('/post-job')}
+                  >
+                    <ListItemButton sx={{ height: 56 }}>
+                      <ListItemText
+                        primary="Post Job"
+                        primaryTypographyProps={{
+                          color: 'primary',
+                          fontWeight: 'medium',
+                          variant: 'body2',
+                        }}
+                      />
+                      <Tooltip title="Post a job">
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            fontSize: 20,
+                          }}
+                        >
+                          🚀
+                        </Box>
+                      </Tooltip>
+                    </ListItemButton>
+                  </ListItem>
+                </a>
+              </Link>
             </Box>
             <Box>
               <Typography variant="overline" sx={{ m: 1 }}>
                 Choose Filters
               </Typography>
               <List>
-                  {listItems.filterOptions.map((item) => (
-                    <ListItem key={item}>
-                      <div id={item} style={{ margin: 0, padding: 0 }} onClick={() => handleAddFilterItem(item)}>
-                        <Chip clickable={true} color="secondary" label={item} />
-                      </div>
-                    </ListItem>
-                  ))}
+                {listItems.filterOptions.map((item) => (
+                  <ListItem key={item}>
+                    <div id={item} style={{ margin: 0, padding: 0 }} onClick={() => handleAddFilterItem(item)}>
+                      <Chip clickable={true} color="secondary" label={item} />
+                    </div>
+                  </ListItem>
+                ))}
               </List>
             </Box>
             <Box>

@@ -10,7 +10,7 @@ import {
   Checkbox,
   useTheme,
 } from '@mui/material';
-import { filterOptionsA, IFilterOptions } from '../FilterOptions';
+import { filterOptionsA, IFilterOptions } from '../FilterOptionsState';
 import { PrimitiveAtom, useAtom } from 'jotai';
 
 const ITEM_HEIGHT = 48;

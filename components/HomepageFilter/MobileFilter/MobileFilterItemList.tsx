@@ -1,7 +1,7 @@
 import { MenuItem, Checkbox, Box, FormControlLabel, FormControl, RadioGroup, Radio, Button } from '@mui/material';
 import { PrimitiveAtom, useAtom } from 'jotai';
 import * as React from 'react';
-import { filterOptionsA, IFilterOptions } from '../FilterOptions';
+import { filterOptionsA, IFilterOptions } from '../FilterOptionsState';
 
 interface IMobileFilterItemList {
   item: PrimitiveAtom<IFilterOptions>;

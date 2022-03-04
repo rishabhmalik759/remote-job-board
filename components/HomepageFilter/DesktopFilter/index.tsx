@@ -3,7 +3,7 @@ import { Box, Button, Typography, Paper } from '@mui/material';
 import { useTheme } from '@mui/styles';
 import FilterItem from './FilterItem';
 import { handleRouteChange } from 'pages';
-import { filterOptionsA, filterOptionsAtomsA } from '../FilterOptions';
+import { filterOptionsA, filterOptionsAtomsA } from '../FilterOptionsState';
 import { useAtom } from 'jotai';
 
 const DesktopFilter: React.FC = () => {
