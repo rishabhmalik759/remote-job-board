@@ -4,7 +4,65 @@
 
 type Company {
   companyName: String
+  createdAt: String
+  emailToCandidates: Boolean
+  getMatches: Boolean
+  highlightPost: Boolean
   id: ID
+  invoiceDetails: InvoiceDetails
+  jobDetails: JobDetails
+  jobLocation: String
+  jobPostDuration: Int
+  jobTags: [String]
+  position: String
+  positionType: String
+  primaryTag: String
+  showCompanyLogo: Boolean
+  stickForDuration: Int
+  updatedAt: String
+}
+
+type HowToApply {
+  companyId: String
+  html: String
+  jobDetails: JobDetails
+  text: String
+}
+
+type InvoiceDetails {
+  companies: [Company]
+  companyId: String
+  companyInvoiceEmail: String
+  emailListToSendInvoice: [String]
+  invoiceAddress: String
+  invoiceNotesPurchaseOrder: String
+  payLater: Boolean
+}
+
+type JobDescription {
+  companyId: String
+  html: String
+  jobDetails: JobDetails
+  text: String
+}
+
+type JobDetails {
+  applyEmail: String
+  applyURL: String
+  companies: [Company]
+  companyId: String
+  companyLogo: String
+  highlightWithCompanyColor: Boolean
+  howToApply: HowToApply
+  jobDescription: JobDescription
+  maxAnnualSalary: Int
+  minAnnualSalary: Int
+}
+
+type Mutation {
+  createCompany: Company
+  deleteCompany(companyId: String!): Company
+  editCompany(companyId: String!): Company
 }
 
 type Query {

@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Company {
+  id                String              @id @default(uuid())
+  companyName       String
+  position          String
+  positionType      String
+  primaryTag        String
+  jobTags           String[]
+  jobLocation       String
+  showCompanyLogo   Boolean
+  emailToCandidates Boolean
+  getMatches        Boolean
+  highlightPost     Boolean
+  stickForDuration  Int
+  jobPostDuration   Int
+  invoiceDetails    InvoiceDetailsState @relation(fields: [invoiceDetailsStateCompanyId], references: [companyId], onDelete: Cascade)
+  jobDetails        JobDetailsState     @relation(fields: [jobDetailsStateCompanyId], references: [companyId], onDelete: Cascade)
+  invoiceDetailsStateCompanyId String
+  jobDetailsStateCompanyId     String
+  createdAt                    DateTime @default(now())
+  updatedAt                    DateTime @updatedAt
+}
+
+model InvoiceDetailsState {
+  companyId                 String
+  companyInvoiceEmail       String
+  emailListToSendInvoice    String[]
+  invoiceAddress            String
+  invoiceNotesPurchaseOrder String
+  payLater                  Boolean
+  companies                 Company[]
+
+  @@unique([companyId])
+}
+
+model JobDetailsState {
+  companyId                 String
+  companyLogo               String
+  highlightWithCompanyColor Boolean
+  minAnnualSalary           Int
+  maxAnnualSalary           Int
+  jobDescriptionCompanyId   String?
+  jobDescription            JobDescription? @relation(fields: [jobDescriptionCompanyId], references: [companyId], onDelete: Cascade)
+  applyURL                  String
+  applyEmail                String
+  companies                 Company[]
+  howToApplyCompanyId       String?
+  howToApply                HowToApply?     @relation(fields: [howToApplyCompanyId], references: [companyId], onDelete: Cascade)
+
+  @@unique([companyId])
+}
+
+model HowToApply {
+  companyId       String
+  jobDetailsState JobDetailsState[]
+  text            String
+  html            String
+
+  @@unique([companyId])
+}
+
+model JobDescription {
+  companyId       String
+  jobDetailsState JobDetailsState[]
+  text            String
+  html            String
+
+  @@unique([companyId])
+}
