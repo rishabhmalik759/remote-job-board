@@ -169,6 +169,7 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     createCompany: NexusGenRootTypes['Company'] | null; // Company
+    createJobPost: NexusGenRootTypes['JobPost'] | null; // JobPost
     deleteCompany: NexusGenRootTypes['Company'] | null; // Company
     editCompany: NexusGenRootTypes['Company'] | null; // Company
   }
@@ -242,6 +243,7 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     createCompany: 'Company'
+    createJobPost: 'JobPost'
     deleteCompany: 'Company'
     editCompany: 'Company'
   }
@@ -254,6 +256,16 @@ export interface NexusGenArgTypes {
   Mutation: {
     createCompany: { // args
       companyName?: string | null; // String
+    }
+    createJobPost: { // args
+      content?: string | null; // String
+      jobLocation?: string | null; // String
+      jobPostDuration?: number | null; // Int
+      position?: string | null; // String
+      positionType?: string | null; // String
+      primaryTag?: string | null; // String
+      stickForDuration?: number | null; // Int
+      title?: string | null; // String
     }
     deleteCompany: { // args
       companyId: string; // String!

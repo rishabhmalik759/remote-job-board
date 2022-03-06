@@ -1,4 +1,4 @@
-import { objectType, extendType, nonNull, stringArg } from 'nexus';
+import { objectType, extendType, nonNull, stringArg, intArg } from 'nexus';
 import { Context } from '../../lib/prisma';
 
 export const Company = objectType({
@@ -117,8 +117,7 @@ export const CompanyQuery = extendType({
     t.nonNull.list.field('companies', {
       type: 'Company',
       resolve(_root, _args, ctx: Context) {
-        const { name } = args;
-        return ctx.prisma.company.find((temp: any) => temp.companyName == name);
+        return ctx.prisma.company.findMany();
       },
     });
   },
@@ -138,6 +137,29 @@ export const CompanyMutation = extendType({
         });
       },
     });
+    t.field('createJobPost', {
+      type: 'JobPost',
+      args: {
+        title: stringArg(),
+        content: stringArg(),
+        position: stringArg(),
+        positionType: stringArg(),
+        primaryTag: stringArg(),
+        jobLocation: stringArg(),
+        stickForDuration: intArg(),
+        jobPostDuration: intArg(),
+      },
+      resolve(
+        _root,
+        { title, content, position, positionType, primaryTag, jobLocation, stickForDuration, jobPostDuration },
+        ctx: Context,
+      ) {
+        return ctx.prisma.JobPost.create({
+          data: { title, content, position, positionType, primaryTag, jobLocation, stickForDuration, jobPostDuration },
+        });
+      },
+    });
+
     t.field('editCompany', {
       type: 'Company',
       args: {

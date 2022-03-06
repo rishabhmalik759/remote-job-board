@@ -14,22 +14,22 @@ model Company{
 
 model JobPost {
   id        String     @id @default(uuid())
-  title     String
+  title     String?
   content   String?
   published Boolean @default(false)
   company    Company?   @relation(fields: [companyId], references: [id])
   companyId  String?
-  position    String
-  positionType String
-  primaryTag   String
+  position    String?
+  positionType String?
+  primaryTag   String?
   tags String[]
-  jobLocation String
+  jobLocation String?
   showCompanyLogo Boolean @default(false)
   emailToCandidates Boolean @default(false)
   getMatches Boolean @default(false)
   highlightPost Boolean @default(false)
-  stickForDuration Int
-  jobPostDuration Int
+  stickForDuration Int?
+  jobPostDuration Int?
   createdOn     DateTime     @default(now())
   invoice Invoice?
   jobDetails JobDetails?

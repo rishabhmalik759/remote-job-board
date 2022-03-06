@@ -72,6 +72,7 @@ type JobPost {
 
 type Mutation {
   createCompany(companyName: String): Company
+  createJobPost(content: String, jobLocation: String, jobPostDuration: Int, position: String, positionType: String, primaryTag: String, stickForDuration: Int, title: String): JobPost
   deleteCompany(companyId: String!): Company
   editCompany(companyId: String!): Company
 }
