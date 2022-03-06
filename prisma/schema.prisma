@@ -1,80 +1,78 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
 
 generator client {
   provider = "prisma-client-js"
 }
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+model Company{
+  id String @id @default(uuid())
+  companyName String @unique
+  jobPosts JobPost[]
 }
 
-model Company {
-  id                String              @id @default(uuid())
-  companyName       String
-  position          String
-  positionType      String
-  primaryTag        String
-  jobTags           String[]
-  jobLocation       String
-  showCompanyLogo   Boolean
-  emailToCandidates Boolean
-  getMatches        Boolean
-  highlightPost     Boolean
-  stickForDuration  Int
-  jobPostDuration   Int
-  invoiceDetails    InvoiceDetailsState @relation(fields: [invoiceDetailsStateCompanyId], references: [companyId], onDelete: Cascade)
-  jobDetails        JobDetailsState     @relation(fields: [jobDetailsStateCompanyId], references: [companyId], onDelete: Cascade)
-  invoiceDetailsStateCompanyId String
-  jobDetailsStateCompanyId     String
-  createdAt                    DateTime @default(now())
-  updatedAt                    DateTime @updatedAt
+model JobPost {
+  id        String     @id @default(uuid())
+  title     String
+  content   String?
+  published Boolean @default(false)
+  company    Company?   @relation(fields: [companyId], references: [id])
+  companyId  String?
+  position    String
+  positionType String
+  primaryTag   String
+  tags String[]
+  jobLocation String
+  showCompanyLogo Boolean @default(false)
+  emailToCandidates Boolean @default(false)
+  getMatches Boolean @default(false)
+  highlightPost Boolean @default(false)
+  stickForDuration Int
+  jobPostDuration Int
+  createdOn     DateTime     @default(now())
+  invoice Invoice?
+  jobDetails JobDetails?
 }
 
-model InvoiceDetailsState {
-  companyId                 String
-  companyInvoiceEmail       String
-  emailListToSendInvoice    String[]
-  invoiceAddress            String
+model Invoice{
+  id     String     @id @default(uuid())
+  jobPost JobPost @relation(fields:[jobPostId],references:[id])
+  jobPostId String
+  companyInvoiceEmail String
+  emailListToSendInvoice String
+  invoiceAddress String
   invoiceNotesPurchaseOrder String
-  payLater                  Boolean
-  companies                 Company[]
-
-  @@unique([companyId])
+  payLater Boolean @default(false)
 }
 
-model JobDetailsState {
-  companyId                 String
-  companyLogo               String
-  highlightWithCompanyColor Boolean
-  minAnnualSalary           Int
-  maxAnnualSalary           Int
-  jobDescriptionCompanyId   String?
-  jobDescription            JobDescription? @relation(fields: [jobDescriptionCompanyId], references: [companyId], onDelete: Cascade)
-  applyURL                  String
-  applyEmail                String
-  companies                 Company[]
-  howToApplyCompanyId       String?
-  howToApply                HowToApply?     @relation(fields: [howToApplyCompanyId], references: [companyId], onDelete: Cascade)
 
-  @@unique([companyId])
+model JobDetails{
+  id     String     @id @default(uuid())
+  jobPost JobPost  @relation(fields: [jobPostId],references:  [id])
+  jobPostId String
+  companyLogo String
+  highlightWithCompanyColor Boolean @default(false)
+  minAnnualSalary Int
+  maxAnnualSalary Int
+  jobDescription JobDescription?
+  howToApply  HowToApply?
+  applyURL String
+  applyEmail  String
 }
 
-model HowToApply {
-  companyId       String
-  jobDetailsState JobDetailsState[]
-  text            String
-  html            String
-
-  @@unique([companyId])
+model JobDescription{
+  id     String     @id @default(uuid())
+  jobDetails JobDetails  @relation(fields: [jobDetailsId],references:  [id])
+  jobDetailsId String
+  text  String
+  html String
 }
 
-model JobDescription {
-  companyId       String
-  jobDetailsState JobDetailsState[]
-  text            String
-  html            String
-
-  @@unique([companyId])
+model HowToApply{
+  id     String     @id @default(uuid())
+  jobDetails JobDetails  @relation(fields: [jobDetailsId],references:  [id])
+  jobDetailsId String
+  text String
+  html String
 }

@@ -30,55 +30,65 @@ export interface NexusGenScalars {
 export interface NexusGenObjects {
   Company: { // root type
     companyName?: string | null; // String
-    createdAt?: string | null; // String
-    emailToCandidates?: boolean | null; // Boolean
-    getMatches?: boolean | null; // Boolean
-    highlightPost?: boolean | null; // Boolean
     id?: string | null; // ID
-    invoiceDetails?: NexusGenRootTypes['InvoiceDetails'] | null; // InvoiceDetails
-    jobDetails?: NexusGenRootTypes['JobDetails'] | null; // JobDetails
-    jobLocation?: string | null; // String
-    jobPostDuration?: number | null; // Int
-    jobTags?: Array<string | null> | null; // [String]
-    position?: string | null; // String
-    positionType?: string | null; // String
-    primaryTag?: string | null; // String
-    showCompanyLogo?: boolean | null; // Boolean
-    stickForDuration?: number | null; // Int
-    updatedAt?: string | null; // String
+    jobPosts?: Array<NexusGenRootTypes['JobPost'] | null> | null; // [JobPost]
   }
   HowToApply: { // root type
-    companyId?: string | null; // String
     html?: string | null; // String
+    id?: string | null; // ID
     jobDetails?: NexusGenRootTypes['JobDetails'] | null; // JobDetails
+    jobDetailsId?: string | null; // String
     text?: string | null; // String
   }
-  InvoiceDetails: { // root type
-    companies?: Array<NexusGenRootTypes['Company'] | null> | null; // [Company]
-    companyId?: string | null; // String
+  Invoice: { // root type
     companyInvoiceEmail?: string | null; // String
-    emailListToSendInvoice?: Array<string | null> | null; // [String]
+    emailListToSendInvoice?: string | null; // String
+    id?: string | null; // ID
     invoiceAddress?: string | null; // String
     invoiceNotesPurchaseOrder?: string | null; // String
+    jobPost?: Array<NexusGenRootTypes['JobPost'] | null> | null; // [JobPost]
+    jobPostId?: string | null; // String
     payLater?: boolean | null; // Boolean
   }
   JobDescription: { // root type
-    companyId?: string | null; // String
     html?: string | null; // String
+    id?: string | null; // ID
     jobDetails?: NexusGenRootTypes['JobDetails'] | null; // JobDetails
+    jobDetailsId?: string | null; // String
     text?: string | null; // String
   }
   JobDetails: { // root type
     applyEmail?: string | null; // String
     applyURL?: string | null; // String
-    companies?: Array<NexusGenRootTypes['Company'] | null> | null; // [Company]
-    companyId?: string | null; // String
     companyLogo?: string | null; // String
     highlightWithCompanyColor?: boolean | null; // Boolean
-    howToApply?: NexusGenRootTypes['HowToApply'] | null; // HowToApply
-    jobDescription?: NexusGenRootTypes['JobDescription'] | null; // JobDescription
+    howToApply?: Array<NexusGenRootTypes['HowToApply'] | null> | null; // [HowToApply]
+    id?: string | null; // ID
+    jobDescription?: Array<NexusGenRootTypes['JobDescription'] | null> | null; // [JobDescription]
+    jobPost?: Array<NexusGenRootTypes['JobPost'] | null> | null; // [JobPost]
     maxAnnualSalary?: number | null; // Int
     minAnnualSalary?: number | null; // Int
+  }
+  JobPost: { // root type
+    company?: Array<NexusGenRootTypes['Company'] | null> | null; // [Company]
+    companyId?: Array<NexusGenRootTypes['Company'] | null> | null; // [Company]
+    content?: string | null; // String
+    emailToCandidates?: boolean | null; // Boolean
+    getMatches?: boolean | null; // Boolean
+    highlightPost?: boolean | null; // Boolean
+    id?: string | null; // ID
+    invoice?: Array<NexusGenRootTypes['Invoice'] | null> | null; // [Invoice]
+    jobDetails?: Array<NexusGenRootTypes['JobDetails'] | null> | null; // [JobDetails]
+    jobLocation?: string | null; // String
+    jobPostDuration?: number | null; // Int
+    position?: string | null; // String
+    positionType?: string | null; // String
+    primaryTag?: string | null; // String
+    published?: boolean | null; // Boolean
+    showCompanyLogo?: boolean | null; // Boolean
+    stickForDuration?: number | null; // Int
+    tags?: Array<string | null> | null; // [String]
+    title?: string | null; // String
   }
   Mutation: {};
   Query: {};
@@ -97,55 +107,65 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 export interface NexusGenFieldTypes {
   Company: { // field return type
     companyName: string | null; // String
-    createdAt: string | null; // String
-    emailToCandidates: boolean | null; // Boolean
-    getMatches: boolean | null; // Boolean
-    highlightPost: boolean | null; // Boolean
     id: string | null; // ID
-    invoiceDetails: NexusGenRootTypes['InvoiceDetails'] | null; // InvoiceDetails
-    jobDetails: NexusGenRootTypes['JobDetails'] | null; // JobDetails
-    jobLocation: string | null; // String
-    jobPostDuration: number | null; // Int
-    jobTags: Array<string | null> | null; // [String]
-    position: string | null; // String
-    positionType: string | null; // String
-    primaryTag: string | null; // String
-    showCompanyLogo: boolean | null; // Boolean
-    stickForDuration: number | null; // Int
-    updatedAt: string | null; // String
+    jobPosts: Array<NexusGenRootTypes['JobPost'] | null> | null; // [JobPost]
   }
   HowToApply: { // field return type
-    companyId: string | null; // String
     html: string | null; // String
+    id: string | null; // ID
     jobDetails: NexusGenRootTypes['JobDetails'] | null; // JobDetails
+    jobDetailsId: string | null; // String
     text: string | null; // String
   }
-  InvoiceDetails: { // field return type
-    companies: Array<NexusGenRootTypes['Company'] | null> | null; // [Company]
-    companyId: string | null; // String
+  Invoice: { // field return type
     companyInvoiceEmail: string | null; // String
-    emailListToSendInvoice: Array<string | null> | null; // [String]
+    emailListToSendInvoice: string | null; // String
+    id: string | null; // ID
     invoiceAddress: string | null; // String
     invoiceNotesPurchaseOrder: string | null; // String
+    jobPost: Array<NexusGenRootTypes['JobPost'] | null> | null; // [JobPost]
+    jobPostId: string | null; // String
     payLater: boolean | null; // Boolean
   }
   JobDescription: { // field return type
-    companyId: string | null; // String
     html: string | null; // String
+    id: string | null; // ID
     jobDetails: NexusGenRootTypes['JobDetails'] | null; // JobDetails
+    jobDetailsId: string | null; // String
     text: string | null; // String
   }
   JobDetails: { // field return type
     applyEmail: string | null; // String
     applyURL: string | null; // String
-    companies: Array<NexusGenRootTypes['Company'] | null> | null; // [Company]
-    companyId: string | null; // String
     companyLogo: string | null; // String
     highlightWithCompanyColor: boolean | null; // Boolean
-    howToApply: NexusGenRootTypes['HowToApply'] | null; // HowToApply
-    jobDescription: NexusGenRootTypes['JobDescription'] | null; // JobDescription
+    howToApply: Array<NexusGenRootTypes['HowToApply'] | null> | null; // [HowToApply]
+    id: string | null; // ID
+    jobDescription: Array<NexusGenRootTypes['JobDescription'] | null> | null; // [JobDescription]
+    jobPost: Array<NexusGenRootTypes['JobPost'] | null> | null; // [JobPost]
     maxAnnualSalary: number | null; // Int
     minAnnualSalary: number | null; // Int
+  }
+  JobPost: { // field return type
+    company: Array<NexusGenRootTypes['Company'] | null> | null; // [Company]
+    companyId: Array<NexusGenRootTypes['Company'] | null> | null; // [Company]
+    content: string | null; // String
+    emailToCandidates: boolean | null; // Boolean
+    getMatches: boolean | null; // Boolean
+    highlightPost: boolean | null; // Boolean
+    id: string | null; // ID
+    invoice: Array<NexusGenRootTypes['Invoice'] | null> | null; // [Invoice]
+    jobDetails: Array<NexusGenRootTypes['JobDetails'] | null> | null; // [JobDetails]
+    jobLocation: string | null; // String
+    jobPostDuration: number | null; // Int
+    position: string | null; // String
+    positionType: string | null; // String
+    primaryTag: string | null; // String
+    published: boolean | null; // Boolean
+    showCompanyLogo: boolean | null; // Boolean
+    stickForDuration: number | null; // Int
+    tags: Array<string | null> | null; // [String]
+    title: string | null; // String
   }
   Mutation: { // field return type
     createCompany: NexusGenRootTypes['Company'] | null; // Company
@@ -160,55 +180,65 @@ export interface NexusGenFieldTypes {
 export interface NexusGenFieldTypeNames {
   Company: { // field return type name
     companyName: 'String'
-    createdAt: 'String'
-    emailToCandidates: 'Boolean'
-    getMatches: 'Boolean'
-    highlightPost: 'Boolean'
     id: 'ID'
-    invoiceDetails: 'InvoiceDetails'
-    jobDetails: 'JobDetails'
-    jobLocation: 'String'
-    jobPostDuration: 'Int'
-    jobTags: 'String'
-    position: 'String'
-    positionType: 'String'
-    primaryTag: 'String'
-    showCompanyLogo: 'Boolean'
-    stickForDuration: 'Int'
-    updatedAt: 'String'
+    jobPosts: 'JobPost'
   }
   HowToApply: { // field return type name
-    companyId: 'String'
     html: 'String'
+    id: 'ID'
     jobDetails: 'JobDetails'
+    jobDetailsId: 'String'
     text: 'String'
   }
-  InvoiceDetails: { // field return type name
-    companies: 'Company'
-    companyId: 'String'
+  Invoice: { // field return type name
     companyInvoiceEmail: 'String'
     emailListToSendInvoice: 'String'
+    id: 'ID'
     invoiceAddress: 'String'
     invoiceNotesPurchaseOrder: 'String'
+    jobPost: 'JobPost'
+    jobPostId: 'String'
     payLater: 'Boolean'
   }
   JobDescription: { // field return type name
-    companyId: 'String'
     html: 'String'
+    id: 'ID'
     jobDetails: 'JobDetails'
+    jobDetailsId: 'String'
     text: 'String'
   }
   JobDetails: { // field return type name
     applyEmail: 'String'
     applyURL: 'String'
-    companies: 'Company'
-    companyId: 'String'
     companyLogo: 'String'
     highlightWithCompanyColor: 'Boolean'
     howToApply: 'HowToApply'
+    id: 'ID'
     jobDescription: 'JobDescription'
+    jobPost: 'JobPost'
     maxAnnualSalary: 'Int'
     minAnnualSalary: 'Int'
+  }
+  JobPost: { // field return type name
+    company: 'Company'
+    companyId: 'Company'
+    content: 'String'
+    emailToCandidates: 'Boolean'
+    getMatches: 'Boolean'
+    highlightPost: 'Boolean'
+    id: 'ID'
+    invoice: 'Invoice'
+    jobDetails: 'JobDetails'
+    jobLocation: 'String'
+    jobPostDuration: 'Int'
+    position: 'String'
+    positionType: 'String'
+    primaryTag: 'String'
+    published: 'Boolean'
+    showCompanyLogo: 'Boolean'
+    stickForDuration: 'Int'
+    tags: 'String'
+    title: 'String'
   }
   Mutation: { // field return type name
     createCompany: 'Company'
@@ -222,6 +252,9 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createCompany: { // args
+      companyName?: string | null; // String
+    }
     deleteCompany: { // args
       companyId: string; // String!
     }
