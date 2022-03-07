@@ -129,14 +129,16 @@ export const CompanyMutation = extendType({
     t.field('createCompany', {
       type: 'Company',
       args: {
-        companyName: stringArg(),
+        companyName: nonNull(stringArg()),
       },
-      resolve(_root, { companyName }, ctx: Context) {
+      resolve(_root, args, ctx: Context) {
+        const { companyName } = args;
         return ctx.prisma.company.create({
           data: { companyName },
         });
       },
     });
+
     t.field('createJobPost', {
       type: 'JobPost',
       args: {
@@ -149,12 +151,11 @@ export const CompanyMutation = extendType({
         stickForDuration: intArg(),
         jobPostDuration: intArg(),
       },
-      resolve(
-        _root,
-        { title, content, position, positionType, primaryTag, jobLocation, stickForDuration, jobPostDuration },
-        ctx: Context,
-      ) {
-        return ctx.prisma.JobPost.create({
+      resolve(_root, args, ctx: Context) {
+        const { title, content, position, positionType, primaryTag, jobLocation, stickForDuration, jobPostDuration } =
+          args;
+
+        return ctx.prisma.jobPost.create({
           data: { title, content, position, positionType, primaryTag, jobLocation, stickForDuration, jobPostDuration },
         });
       },
@@ -195,19 +196,6 @@ export const CompanyMutation = extendType({
           data: {
             ...updatedData,
           },
-          include: {
-            invoiceDetails: {
-              include: {
-                companies: true,
-              },
-            },
-            jobDetails: {
-              include: {
-                howToApply: true,
-                jobDescription: true,
-              },
-            },
-          },
         });
       },
     });
@@ -232,19 +220,6 @@ export const CompanyMutation = extendType({
         return ctx.prisma.company.delete({
           where: {
             id: foundCompany.id,
-          },
-          include: {
-            invoiceDetails: {
-              include: {
-                companies: true,
-              },
-            },
-            jobDetails: {
-              include: {
-                howToApply: true,
-                jobDescription: true,
-              },
-            },
           },
         });
       },

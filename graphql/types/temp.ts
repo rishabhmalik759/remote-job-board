@@ -1,16 +1,7 @@
 import { objectType, extendType, nonNull, stringArg } from 'nexus';
 import { Context } from '../../lib/prisma';
+import { Company } from './Company';
 
-export const Company = objectType({
-  name: 'Company',
-  definition(t) {
-    t.id('id');
-    t.string('companyName');
-    t.list.field('jobPosts', {
-      type: JobPost,
-    });
-  },
-});
 export const JobPost = objectType({
   name: 'JobPost',
   definition(t) {
@@ -111,106 +102,9 @@ export const HowToApply = objectType({
   },
 });
 
-export const CompanyQuery = extendType({
-  type: 'Query',
-  definition(t) {
-    t.nonNull.list.field('companies', {
-      type: 'Company',
-      resolve(_root, _args, ctx: Context) {
-        return ctx.prisma.company.findMany({
-          include: {
-            invoiceDetails: {
-              include: {
-                companies: true,
-              },
-            },
-            jobDetails: {
-              include: {
-                howToApply: true,
-                jobDescription: true,
-              },
-            },
-          },
-        });
-      },
-    });
-  },
-});
-
 export const CompanyMutation = extendType({
   type: 'Mutation',
   definition(t) {
-    t.field('createCompany', {
-      type: 'Company',
-      resolve(_root, args, ctx: Context) {
-        const { companyName } = args;
-
-        return ctx.prisma.company.create({
-          data: {
-            companyName: companyName || '',
-            emailToCandidates: false,
-            getMatches: false,
-            highlightPost: false,
-            jobPostDuration: 0,
-            jobTags: ['React', 'CSS', 'HTML'],
-            jobLocation: 'Remote',
-            jobDetails: {
-              create: {
-                companyId: Math.random().toString(36).substring(7),
-                highlightWithCompanyColor: false,
-                companyLogo: 'This is the logo',
-                minAnnualSalary: 10000,
-                maxAnnualSalary: 20000,
-                applyURL: 'https://www.google.com',
-                applyEmail: 'google@google.com',
-                jobDescription: {
-                  create: {
-                    companyId: Math.random().toString(36).substring(7),
-                    text: 'This is a job description',
-                    html: '<p>This is a job description</p>',
-                  },
-                },
-                howToApply: {
-                  create: {
-                    companyId: Math.random().toString(36).substring(7),
-                    text: 'This is how to apply',
-                    html: '<p>This is how to apply</p>',
-                  },
-                },
-              },
-            },
-            invoiceDetails: {
-              create: {
-                companyId: Math.random().toString(36).substring(7),
-                companyInvoiceEmail: 'google@google.com',
-                emailListToSendInvoice: [''],
-                invoiceAddress: 'google@google.com',
-                invoiceNotesPurchaseOrder: '',
-                payLater: false,
-              },
-            },
-            position: 'Frontend Engineer',
-            positionType: 'Full-time',
-            primaryTag: 'Developer',
-            showCompanyLogo: false,
-            stickForDuration: 0,
-          },
-          include: {
-            invoiceDetails: {
-              include: {
-                companies: true,
-              },
-            },
-            jobDetails: {
-              include: {
-                howToApply: true,
-                jobDescription: true,
-              },
-            },
-          },
-        });
-      },
-    });
     t.field('editCompany', {
       type: 'Company',
       args: {
@@ -246,57 +140,29 @@ export const CompanyMutation = extendType({
           data: {
             ...updatedData,
           },
-          include: {
-            invoiceDetails: {
-              include: {
-                companies: true,
-              },
-            },
-            jobDetails: {
-              include: {
-                howToApply: true,
-                jobDescription: true,
-              },
-            },
-          },
         });
       },
     });
-    t.field('deleteCompany', {
-      type: 'Company',
+
+    t.field('createJobPost', {
+      type: 'JobPost',
       args: {
-        companyId: nonNull(stringArg()),
+        title: stringArg(),
+        content: stringArg(),
+        position: stringArg(),
+        positionType: stringArg(),
+        primaryTag: stringArg(),
+        jobLocation: stringArg(),
+        stickForDuration: intArg(),
+        jobPostDuration: intArg(),
       },
-      resolve: async (_root, args, ctx: Context) => {
-        const { companyId } = args;
-
-        const foundCompany = await ctx.prisma.company.findUnique({
-          where: {
-            id: companyId,
-          },
-        });
-
-        if (!foundCompany) {
-          throw new Error('No company found with the provided ID.');
-        }
-
-        return ctx.prisma.company.delete({
-          where: {
-            id: foundCompany.id,
-          },
-          include: {
-            invoiceDetails: {
-              include: {
-                companies: true,
-              },
-            },
-            jobDetails: {
-              include: {
-                howToApply: true,
-                jobDescription: true,
-              },
-            },
-          },
+      resolve(
+        _root,
+        { title, content, position, positionType, primaryTag, jobLocation, stickForDuration, jobPostDuration },
+        ctx: Context,
+      ) {
+        return ctx.prisma.jobPost.create({
+          data: { title, content, position, positionType, primaryTag, jobLocation, stickForDuration, jobPostDuration },
         });
       },
     });
