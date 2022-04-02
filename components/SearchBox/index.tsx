@@ -1,15 +1,19 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { InputAdornment, Paper, useTheme } from '@mui/material';
+import { Divider, InputAdornment, Paper, Typography, useTheme } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-export default function SearchBox() {
+interface ISearchBox {
+  helperText?: string;
+}
+
+const SearchBox:React.FC<ISearchBox> = ({helperText}) => {
   const theme = useTheme();
   const autoCompleteStyles = {
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      width: 400,
+      width: helperText ? 500: 400,
     },
   };
   return (
@@ -33,7 +37,8 @@ export default function SearchBox() {
                   type: 'search',
                   startAdornment: (
                     <InputAdornment position="start">
-                      <SearchIcon />
+                      {helperText ? <Typography sx={{fontWeight: 'bold', ml:1, mr: 1.7}}>{helperText}</Typography> : <SearchIcon sx={{mx: 1}} />}
+                      <Divider orientation="vertical" sx={{height: 30}}></Divider>
                     </InputAdornment>
                   ),
                 }}
@@ -45,6 +50,8 @@ export default function SearchBox() {
     </>
   );
 }
+
+export default SearchBox;
 
 // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
 const top100Films = [

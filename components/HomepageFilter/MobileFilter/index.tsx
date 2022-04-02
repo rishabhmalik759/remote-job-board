@@ -48,11 +48,7 @@ const MobileFilter: React.FC = () => {
           },
         }}
       />
-      <Box sx={{ textAlign: 'center', pt: 1 }}>
-        <Button onClick={toggleDrawer(true)}>Open</Button>
-      </Box>
       <SwipeableDrawer
-        //   container={container}
         sx={swipableDrawerStyles}
         anchor="bottom"
         open={open}
@@ -77,7 +73,7 @@ const MobileFilter: React.FC = () => {
         >
           <Puller />
           <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-            <Typography sx={{ p: 2, color: 'text.secondary' }}>Filter Options </Typography>{' '}
+            <Typography sx={{ p: 2, color: 'text.secondary' }}>Filter Options </Typography>
             <Box sx={{ p: 2 }}>
               <Button sx={{p:0}}  variant="text" color="secondary" onClick={()=>setClearAll(true)}>
                 CLEAR ALL

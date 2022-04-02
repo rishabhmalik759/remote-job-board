@@ -2,11 +2,11 @@ import { atom } from 'jotai';
 import { splitAtom } from 'jotai/utils'
 
 
-interface IJobList {
+export interface IJobList {
     jid: string;
     companyName: string;
-    position: string;
-    positionType: string;
+    posDesc: string;
+    posType: string;
     primaryTag: string;
     jobLocation: string;
     companyLogo: string;
@@ -16,12 +16,40 @@ const initialJobListState: IJobList[] = [
     {
         jid: '1231231',
         companyName: 'Tela Secure',
-        position: 'Full Stack Developer',
-        positionType: 'Remote',
+        posDesc: 'Full Stack Developer',
+        posType: 'Remote',
+        primaryTag: 'Blockchain',
+        jobLocation: 'Prague, Czech Republic',
+        companyLogo: 'TELA SECURE'
+    },
+    {
+        jid: '1231232',
+        companyName: 'Tela Secure',
+        posDesc: 'Full Stack Developer',
+        posType: 'Remote',
+        primaryTag: 'Blockchain',
+        jobLocation: 'Prague, Czech Republic',
+        companyLogo: 'TELA SECURE'
+    },
+    {
+        jid: '1231233',
+        companyName: 'Tela Secure',
+        posDesc: 'Full Stack Developer',
+        posType: 'Remote',
+        primaryTag: 'Blockchain',
+        jobLocation: 'Prague, Czech Republic',
+        companyLogo: 'TELA SECURE'
+    },
+    {
+        jid: '1231234',
+        companyName: 'Tela Secure',
+        posDesc: 'Full Stack Developer',
+        posType: 'Remote',
         primaryTag: 'Blockchain',
         jobLocation: 'Prague, Czech Republic',
         companyLogo: 'TELA SECURE'
     }
+    
 ]
 
 

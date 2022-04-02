@@ -68,8 +68,6 @@ const FilterItem: React.FC<IFilterItem> = (props) => {
     });
   };
 
-  React.useEffect(() => {}, [appliedFilters]);
-
   const filterItemStyles = {
     m: 1,
     width: 170,

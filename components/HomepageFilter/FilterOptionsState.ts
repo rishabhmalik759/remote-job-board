@@ -96,3 +96,4 @@ export const filterOptions: IFilterOptions[] = [
 
 export const filterOptionsA = atom<IFilterOptions[]>(filterOptions);
 export const filterOptionsAtomsA = splitAtom(filterOptionsA)
+export const hideOnScrollWindow = atom(false);

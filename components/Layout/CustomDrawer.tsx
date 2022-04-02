@@ -11,17 +11,14 @@ import {
   Typography,
 } from '@mui/material';
 import Chip from '@mui/material/Chip';
-
 import * as React from 'react';
 import { createStyles, makeStyles, useTheme } from '@mui/styles';
 import ListItemButton from '@mui/material/ListItemButton';
 import Paper from '@mui/material/Paper';
 import Tooltip from '@mui/material/Tooltip';
-import { ArrowLeft } from '@mui/icons-material';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import router from 'next/dist/client/router';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 const drawerWidth = '250px';
 
@@ -87,11 +84,6 @@ const CustomDrawer: React.FC<ICustomDrawer> = (props) => {
   const { openDrawer, setOpenDrawer } = props;
   const classes = useStyles();
   const theme = useTheme();
-
-  const handleClick = (e: any, route: string) => {
-    e.preventDefault();
-    router.push(route);
-  };
 
   const handleAddFilterItem = (item: string) => {
     const newFilterOptions = listItems.filterOptions.filter((option) => option !== item);
