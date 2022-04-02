@@ -1,12 +1,13 @@
 import { Box, Grid, Paper, styled, useTheme } from '@mui/material';
 import * as React from 'react';
 import JobListItems from './JobListItems';
+import JobSelected from './JobSelected';
 
-const JobList: React.FC<{jid: string | string[] | undefined}> = ({jid}) => {
+const JobList: React.FC<{ jid: string | string[] | undefined }> = ({ jid }) => {
   const theme = useTheme();
 
   const jobResultsStyles = {
-    display: 'none',
+    width: '100%',
     [theme.breakpoints.up('md')]: {
       width: 'calc(100% - 2rem)',
       mx: 'auto',
@@ -17,18 +18,34 @@ const JobList: React.FC<{jid: string | string[] | undefined}> = ({jid}) => {
       mx: 'auto',
       px: 2,
       display: 'block',
+      height: 'calc(100vh - 13%)',
     },
   };
+
+  const jobListStyles = {
+    marginTop: 1,
+    paddingTop: 1
+  };
+
+  const JobSelectedBox = styled(Box)<{ component?: React.ElementType }>(({ theme }) => ({
+    [theme.breakpoints.down('lg')]: {
+      display: 'none',
+    },
+    position: 'sticky',
+    top: 150,
+  }));
 
   return (
     <>
       <Box sx={jobResultsStyles}>
-        <Grid container spacing={2}>
-          <Grid item xs={6} md={6}>
+        <Grid sx={jobListStyles} container spacing={2}>
+          <Grid item xs={12} md={6}>
             <JobListItems />
           </Grid>
-          <Grid item xs={6} md={6}>
-            <Item>xs=6 md=4</Item>
+          <Grid item xs={12} md={6}>
+            <JobSelectedBox>
+              <JobSelected />
+            </JobSelectedBox>
           </Grid>
         </Grid>
       </Box>
@@ -37,11 +54,3 @@ const JobList: React.FC<{jid: string | string[] | undefined}> = ({jid}) => {
 };
 
 export default JobList;
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));

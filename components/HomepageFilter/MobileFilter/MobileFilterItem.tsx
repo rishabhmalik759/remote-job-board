@@ -22,7 +22,6 @@ const MobileFilterItem: React.FC<IMobileFilterItem> = (props) => {
 
   return (
     <>
-      {' '}
       <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
         <Paper elevation={0} sx={{ position: 'absolute', top: 0, zIndex: 2 }}>
           <Tabs
